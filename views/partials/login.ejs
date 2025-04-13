@@ -1,0 +1,80 @@
+<!-- Modal Auth -->
+<div class="auth-Modal">
+  <div class="modal-content">
+    <!-- Tabs -->
+    <div class="auth-tabs">
+      <button class="tab-btn active" data-tab="login">Đăng nhập</button>
+      <button class="tab-btn" data-tab="register">Đăng ký</button>
+    </div>
+
+    <!-- Login Form -->
+    <div class="tab-content active" id="login">
+      <h2>Đăng Nhập</h2>
+      <form>
+        <input type="text" placeholder="Tên đăng nhập" required />
+        <input type="password" placeholder="Mật khẩu" required />
+        <div class="remember-me">
+          <input type="checkbox" id="rememberMe" />
+          <label for="rememberMe">Ghi Nhớ Tôi</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Đăng nhập</button>
+        <div class="forgot-password">
+          <a href="#!">Quên Mật Khẩu?</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Register Form -->
+    <div class="tab-content" id="register">
+      <h2>Đăng Ký</h2>
+      <form>
+        <input type="text" placeholder="Tên đăng nhập" required />
+        <input type="text" placeholder="Họ tên" required />
+        <input type="password" placeholder="Mật khẩu" required />
+        <input type="password" placeholder="Xác nhận mật khẩu" required />
+        <div class="terms">
+          <input type="checkbox" id="terms" required />
+          <label for="terms">Tôi đồng ý với điều khoản</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Đăng ký</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal script -->
+<script>
+  const modal = document.querySelector(".auth-Modal");
+  const openModalBtn = document.querySelector(".open-modal-btn");
+  const closeBtn = document.querySelector(".close");
+  const tabBtns = document.querySelectorAll(".tab-btn");
+  const tabContents = document.querySelectorAll(".tab-content");
+
+  // Mở modal
+  openModalBtn.onclick = () => {
+    modal.classList.add("show"); // Mở modal bằng cách thêm lớp 'show'
+    showTab("login");
+  };
+
+  window.onclick = (e) => {
+    if (e.target === modal) {
+      modal.classList.remove("show");
+    }
+  };
+
+  // Xử lý chuyển đổi giữa các tab
+  function showTab(tabName) {
+    tabBtns.forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.tab === tabName);
+    });
+
+    tabContents.forEach((content) => {
+      content.classList.toggle("active", content.id === tabName);
+    });
+  }
+
+  // Xử lý khi click vào các tab
+  tabBtns.forEach((btn) => {
+    btn.onclick = () => showTab(btn.dataset.tab);
+  });
+</script>
