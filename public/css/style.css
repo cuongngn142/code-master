@@ -749,7 +749,8 @@ Nhưng hiện nay, một số trình duyệt (ví dụ Edge mới) đã hỗ tr�
 }
 
 .tab-content input[type="text"],
-.tab-content input[type="password"] {
+.tab-content input[type="password"],
+.tab-content input[type="email"]  {
   padding: 12px;
   font-size: 1.4rem;
   border: 1px solid #ccc;

@@ -20,6 +20,10 @@ app.use(express.static(path.join(__dirname, "public")));
 // Routes
 const indexRoute = require("./routes/indexRoute");
 const authRoute = require("./routes/authRoute");
+const profileRouter = require('./routes/profileRoute');
+const settingsRouter = require('./routes/settingsRoute');
+app.use('/profile', profileRouter);
+app.use('/settings', settingsRouter);
 
 app.use("/", indexRoute);
 app.use("/auth", authRoute);
