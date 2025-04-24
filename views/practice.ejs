@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- reset css -->
+    <link rel="stylesheet" href="./css/reset.css" />
+    <!-- embed fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@700&display=swap" rel="stylesheet" />
+    <link rel="icon" href="./images/img/bg-logo-web.png" type="image/png" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/practice.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Luyện Tập | Code Master</title>
+</head>
+<body>
+    <!-- header -->
+    <header class="header fixed">
+        <%- include('partials/header') %>
+    </header>
+
+    <!-- main -->
+    <main class="practice-main">
+        <!-- Phần filter và tìm kiếm -->
+        <div class="practice-filter">
+            <div class="search-box">
+                <input type="text" placeholder="Tìm kiếm bài tập...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="filter-options">
+                <select class="difficulty-filter">
+                    <option value="">Mức độ khó</option>
+                    <option value="easy">Dễ</option>
+                    <option value="medium">Trung bình</option>
+                    <option value="hard">Khó</option>
+                </select>
+                <select class="topic-filter">
+                    <option value="">Chủ đề</option>
+                    <option value="array">Mảng</option>
+                    <option value="string">Chuỗi</option>
+                    <option value="recursion">Đệ quy</option>
+                    <option value="algorithm">Thuật toán</option>
+                </select>
+                    <button class="btn-add-practice">
+                        <i class="fas fa-plus"></i>
+                        Thêm bài tập
+                    </button>
+
+            </div>
+        </div>
+
+        <!-- Danh sách bài tập -->
+        <div class="practice-list">
+            <% for(let i = 0; i < 10; i++) { %>
+            <div class="practice-item">
+                <div class="practice-info">
+                    <h3 class="practice-title">Bài tập <%= i + 1 %></h3>
+                    <p class="practice-description">Mô tả ngắn về bài tập...</p>
+                    <div class="practice-meta">
+                        <span class="difficulty easy">Dễ</span>
+                        <span class="topic">Mảng</span>
+                        <span class="submissions">Số lần nộp: 100</span>
+                    </div>
+                </div>
+                <div class="practice-actions">
+                    <button class="btn-solve">Giải bài</button>
+                </div>
+            </div>
+            <% } %>
+        </div>
+
+        <!-- Phân trang -->
+        <div class="pagination">
+            <button class="btn-prev"><i class="fas fa-chevron-left"></i></button>
+            <div class="page-numbers">
+                <span class="active">1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>...</span>
+                <span>10</span>
+            </div>
+            <button class="btn-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </main>
+
+    <!-- footer -->
+    <footer>
+        <%- include('partials/footer') %>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Xử lý tìm kiếm
+            const searchInput = document.querySelector('.search-box input');
+            searchInput.addEventListener('input', function(e) {
+                // Thêm logic tìm kiếm ở đây
+                console.log('Searching:', e.target.value);
+            });
+
+            // Xử lý filter
+            const filters = document.querySelectorAll('select');
+            filters.forEach(filter => {
+                filter.addEventListener('change', function() {
+                    // Thêm logic filter ở đây
+                    console.log('Filter changed:', this.value);
+                });
+            });
+
+            // Xử lý nút giải bài
+            const solveBtns = document.querySelectorAll('.btn-solve');
+            solveBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Thêm logic chuyển đến trang giải bài
+                    console.log('Solving practice...');
+                });
+            });
+
+            // Xử lý nút thêm bài tập
+            const addPracticeBtn = document.querySelector('.btn-add-practice');
+            if (addPracticeBtn) {
+                addPracticeBtn.addEventListener('click', function() {
+                    window.location.href = '/practice/add';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+    
