@@ -1,0 +1,151 @@
+.practice-filter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 70px;
+  gap: 20px;
+}
+
+.practice-filter .search-box {
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 10px;
+}
+
+.practice-filter .search-box input {
+  width: 500px;
+  height: 30px;
+  font-family: "Poppins", sans-serif;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.practice-filter .search-box .fa-search {
+  position: absolute;
+  font-size: 24px;
+  color: rgb(58, 123, 219);
+  right: 10px;
+  cursor: pointer;
+  transition: ease-in-out 0.5s;
+}
+
+.practice-filter .search-box .fa-search:hover {
+  transform: scale(1.2);
+}
+
+.filter-options {
+  display: flex;
+  gap: 30px;
+}
+
+.filter-options .difficulty-filter {
+  width: 100px;
+  height: 30px;
+  border-radius: 15px;
+  font-family: "Poppins", sans-serif;
+}
+
+.filter-options .topic-filter {
+  width: 100px;
+  height: 30px;
+  font-family: "Poppins", sans-serif;
+  border-radius: 15px;
+}
+
+.btn-add-practice {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.3rem;
+  border-radius: 15px;
+  background: rgb(58, 123, 219);
+  color: #fff;
+}
+
+.btn-add-practice .fa-plus {
+  color: #fff;
+}
+
+.practice-list {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* responsive */
+  gap: 30px;
+}
+
+.practice-item {
+  background: rgb(255, 255, 255);
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.practice-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.practice-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.practice-title {
+  font-weight: 700;
+  font-size: 2.2rem;
+  font-family: "Poppins", sans-serif;
+}
+
+.practice-meta .difficulty strong {
+  color: green;
+}
+
+.practice-meta strong {
+  font-weight: 600;
+}
+
+.practice-description {
+  padding: 20px 0;
+  height: 58px;
+  line-height: 1.2;
+}
+
+.practice-info .btn-solve {
+  border-radius: 10px;
+  background: #ffbb00;
+  border: none;
+  color: #fff;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+  font-weight: 500;
+  font-size: 1.7rem;
+  font-family: "Poppins", sans-serif;
+}
+
+.btnn {
+  background: #ffffff;
+  color: black;
+  cursor: pointer;
+  border: 2px solid #a09d9d;
+  padding: 5px 10px;
+}
+.btnn .fas {
+  margin: 5px;
+}
+
+.page-numbers span {
+  border: 2px solid #a09d9d;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.page-numbers span.active {
+  background: rgb(106, 155, 230);
+  color: #fff;
+}

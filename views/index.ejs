@@ -42,27 +42,32 @@
     <%- include('partials/login') %>
   </body>
   <script>
-    // Phần active cho các gạch chân dưới navbar
-    const navItems = document.querySelectorAll(".navbar ul li");
+    document.addEventListener("DOMContentLoaded", function () {
+      // Phần active cho các gạch chân dưới navbar
+      // First error at line 65
+      const navItems = document.querySelectorAll(".navbar ul li");
+      if (navItems.length > 0) {
+        navItems.forEach((item) => {
+          item.addEventListener("click", () => {
+            navItems.forEach((el) => el.classList.remove("active"));
+            item.classList.add("active");
+          });
+        });
+      }
 
-    navItems.forEach((item) => {
-      item.addEventListener("click", () => {
-        navItems.forEach((el) => el.classList.remove("active"));
-        item.classList.add("active");
-      });
-    });
-
-    // Phần active cho các gạch chân dưới blog
-    const dots = document.querySelectorAll(".dot");
-    const blogList = document.querySelector(".blog-list");
-
-    dots.forEach((dot, index) => {
-      dot.addEventListener("click", () => {
-        dots.forEach((d) => d.classList.remove("active"));
-        dot.classList.add("active");
-
-        blogList.style.transform = `translateX(-${index * 100}%)`;
-      });
+      // Phần active cho các gạch chân dưới blog
+      // Second error at line 610
+      const dots = document.querySelectorAll(".dot");
+      const blogList = document.querySelector(".blog-list");
+      if (dots.length > 0 && blogList) {
+        dots.forEach((dot, index) => {
+          dot.addEventListener("click", () => {
+            dots.forEach((d) => d.classList.remove("active"));
+            dot.classList.add("active");
+            blogList.style.transform = `translateX(-${index * 100}%)`;
+          });
+        });
+      }
     });
   </script>
 </html>
