@@ -43,57 +43,70 @@
             </select>
             <select class="topic-filter">
               <option value="">Chủ đề</option>
-              <option value="array">Mảng</option>
-              <option value="string">Chuỗi</option>
-              <option value="recursion">Đệ quy</option>
-              <option value="algorithm">Thuật toán</option>
+              <% if (typeof topics !== 'undefined') { %>
+                <% topics.forEach(function(topic) { %>
+                  <option value="<%= topic.MaChuDe %>"><%= topic.TenChuDe %></option>
+                <% }); %>
+              <% } %>
             </select>
+            <button class="btn-add-topic">
+              <i class="fas fa-plus"></i>
+              Thêm chủ đề
+            </button>
+            <button class="btn-topic-detail" onclick="window.location.href='/topic/detail'">
+              <i class="fas fa-list"></i>
+              Chi tiết chủ đề
+            </button>
             <button class="btn-add-practice">
               <i class="fas fa-plus"></i>
               Thêm bài tập
             </button>
           </div>
-        </div>
+      </div>
 
-        <!-- Danh sách bài tập -->
-        <div class="practice-list">
-          <% for(let i = 0; i < 9; i++) { %>
-          <div class="practice-item">
-            <div class="practice-info">
-              <h3 class="practice-title">Bài tập <%= i + 1 %></h3>
-              <p class="practice-description line-clamp line-2 break-all">
-                Mô tả ngắn về bài tập Mô tả ngắn về bài tập Mô tả ngắn về bài
-                tập Mô tả ngắn về bài tập
-              </p>
-              <div class="practice-meta">
-                <span class="difficulty easy">Độ khó: <strong>Dễ</strong></span>
-                <span class="topic">Loại bài tập: <strong>Mảng</strong></span>
-                <span class="submissions"
-                  >Số lần nộp: <strong>100</strong></span
-                >
+      <!-- Phần hiển thị danh sách bài tập -->
+      <div class="practice-list">
+        <% if (typeof practices !== 'undefined' && practices.length > 0) { %>
+          <% practices.forEach(function(practice) { %>
+            <div class="practice-item">
+              <div class="practice-info">
+                <div class="practice-meta">
+                  <h3 class="practice-title"><%= practice.TieuDe %></h3>
+                  <p class="difficulty">Độ khó: <strong><%= practice.DoKho %></strong></p>
+                  <p>Chủ đề: <strong><%= practice.TenChuDe %></strong></p>
+                </div>
+                <p class="practice-description"><%= practice.MoTa %></p>
+                <div class="practice-buttons">
+                  <button class="btn-solve" onclick="window.location.href='/practice/solve/<%= practice.MaBaiTap %>'">
+                    Giải bài
+                  </button>
+                  <button class="btn-details" onclick="window.location.href='/practice/details/<%= practice.MaBaiTap %>'">
+                    Chi tiết
+                  </button>
+                </div>
               </div>
-              <button class="btn btn-solve">Giải bài</button>
             </div>
-          </div>
-          <% } %>
-        </div>
+          <% }); %>
+        <% } else { %>
+          <p>Chưa có bài tập nào.</p>
+        <% } %>
+      </div>
 
-        <!-- Phân trang -->
-        <div class="pagination">
-          <button class="btnn btn-prev">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <div class="page-numbers">
-            <span class="active">1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>...</span>
-            <span>10</span>
-          </div>
-          <button class="btnn btn-next">
-            <i class="fas fa-chevron-right"></i>
-          </button>
+      <!-- Phân trang -->
+      <div class="pagination">
+        <button class="btnn btn-prev">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="page-numbers">
+          <span class="active">1</span>
+          <span>2</span>
+          <span>3</span>
+          <span>...</span>
+          <span>10</span>
         </div>
+        <button class="btnn btn-next">
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
     </main>
 
@@ -105,7 +118,6 @@
         // Xử lý tìm kiếm
         const searchInput = document.querySelector(".search-box input");
         searchInput.addEventListener("input", function (e) {
-          // Thêm logic tìm kiếm ở đây
           console.log("Searching:", e.target.value);
         });
 
@@ -113,7 +125,6 @@
         const filters = document.querySelectorAll("select");
         filters.forEach((filter) => {
           filter.addEventListener("change", function () {
-            // Thêm logic filter ở đây
             console.log("Filter changed:", this.value);
           });
         });
@@ -136,7 +147,7 @@
         }
       });
 
-      //active cho phân trang
+      //xử lí cho phân trang
       const pageItems = document.querySelectorAll(".page-numbers span");
       pageItems.forEach((item) => {
         item.addEventListener("click", () => {
@@ -144,6 +155,85 @@
           item.classList.add("active");
         });
       });
+
     </script>
+    <!-- Modal thêm chủ đề -->
+    <div class="modal" id="addTopicModal">
+      <div class="modal-content">
+        <h2>Thêm Chủ Đề Mới</h2>
+        <form id="addTopicForm">
+          <div class="form-group">
+            <label for="topicName">Tên chủ đề:</label>
+            <input type="text" id="topicName" name="TenChuDe" required>  <!-- Đổi từ tenChuDe thành TenChuDe -->
+          </div>
+          <div class="form-group">
+            <label for="topicDesc">Mô tả:</label>
+            <textarea id="topicDesc" name="MoTa" rows="3"></textarea>  <!-- Đổi từ moTa thành MoTa -->
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Thêm</button>
+            <button type="button" class="btn-secondary" onclick="closeTopicModal()">Hủy</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="./controllers/addsubjectController.js"></script>
   </body>
 </html>
+
+<script>
+  const addTopicBtn = document.querySelector(".btn-add-topic");
+  const addTopicModal = document.getElementById("addTopicModal");
+  const addTopicForm = document.getElementById("addTopicForm");
+
+  // Mở modal khi click nút thêm chủ đề
+  addTopicBtn.addEventListener("click", function() {
+    addTopicModal.style.display = "block";
+  });
+
+  // Đóng modal khi ấn nút hủy
+  function closeTopicModal() {
+    addTopicModal.style.display = "none";
+  }
+
+  // Đóng modal khi ấn bên ngoài
+  window.addEventListener("click", function(event) {
+    if (event.target === addTopicModal) {
+      closeTopicModal();
+    }
+  });
+
+  // Xử lý form thêm chủ đề
+  addTopicForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const data = {
+        TenChuDe: formData.get("TenChuDe"),
+        MoTa: formData.get("MoTa")
+    };
+
+    try {
+        const response = await fetch("/api/topics", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            alert("Thêm chủ đề thành công!");
+            closeTopicModal();
+            location.reload();
+        } else {
+            const errorData = await response.json();
+            alert(errorData.message || "Có lỗi xảy ra khi thêm chủ đề!");
+        }
+    } catch (error) {
+        console.error("Lỗi:", error);
+        alert("Có lỗi xảy ra khi thêm chủ đề!");
+    }
+});
+</script>
+

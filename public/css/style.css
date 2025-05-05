@@ -10,15 +10,11 @@
 
 html {
   font-size: 62.5%;
-  /* thay đổi cho 1rem = 10px */
-  /* 1rem = 16px (mặc định của trình duyệt) */
 }
 
 body {
   font-size: 1.6rem;
-  /* 1.6rem = 16px do đã thay đổi 1rem = 10px */
   font-family: "Poppins", sans-serif;
-  /* sử dụng font poppins cho nội dung */
 }
 
 /* ------------------Common--------------------- */

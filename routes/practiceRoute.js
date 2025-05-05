@@ -1,17 +1,103 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const practiceController = require("../controllers/practiceController");
+const practiceModel = require('../models/practiceModel');
+const practiceController = require('../controllers/practiceController');
 
-// Route hiển thị trang luyện tập
-router.get("/", practiceController.getAll);
+// Đặt các route cụ thể trước route có param
+router.get('/', async (req, res) => {
+    try {
+        const topics = await practiceModel.getAllTopics();
+        const practices = await practiceModel.getAllPractices();
 
-// Route hiển thị chi tiết bài tập
-router.get("/:id", practiceController.getById);
+        res.render('practice', { 
+            user: req.session.user,
+            practices: practices,
+            topics: topics
+        });
+    } catch (error) {
+        console.error('Lỗi khi tải trang practice:', error);
+        res.status(500).send('Đã xảy ra lỗi khi tải trang');
+    }
+});
 
-// Route tìm kiếm bài tập
-router.get("/search", practiceController.search);
+router.get("/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const practice = await practiceModel.getPracticeById(id);
+        if (practice.length > 0) {
+            res.render('practice-detail', { practice: practice[0] });
+        } else {
+            res.status(404).send('Không tìm thấy bài tập');
+        }
+    } catch (error) {
+        console.error('Lỗi:', error);
+        res.status(500).send('Lỗi server');
+    }
+});
 
-// Route lọc bài tập theo chủ đề và độ khó
-router.get("/filter", practiceController.filter);
+router.get("/search", async (req, res) => {
+    try {
+        const searchTerm = req.query.q;
+        const practices = await practiceModel.searchPractices(searchTerm);
+        res.json(practices);
+    } catch (error) {
+        console.error('Lỗi:', error);
+        res.status(500).json({ error: 'Lỗi server' });
+    }
+});
+
+router.get("/filter", async (req, res) => {
+    try {
+        const { difficulty, topic } = req.query;
+        const practices = await practiceModel.filterPractices(difficulty, topic);
+        res.json(practices);
+    } catch (error) {
+        console.error('Lỗi:', error);
+        res.status(500).json({ error: 'Lỗi server' });
+    }
+});
+
+router.get('/details/:id', practiceController.showDetails);
+router.get('/edit/:id', practiceController.showEditForm);
+router.post('/edit/:id', practiceController.updatePractice);
+router.delete('/delete/:id', practiceController.deletePractice);
+
+router.get('/search', async (req, res) => {
+    try {
+        const searchTerm = req.query.q;
+        const practices = await practiceModel.searchPractices(searchTerm);
+        res.json(practices);
+    } catch (error) {
+        console.error('Lỗi:', error);
+        res.status(500).json({ error: 'Lỗi server' });
+    }
+});
+
+router.get("/filter", async (req, res) => {
+    try {
+        const { difficulty, topic } = req.query;
+        const practices = await practiceModel.filterPractices(difficulty, topic);
+        res.json(practices);
+    } catch (error) {
+        console.error('Lỗi:', error);
+        res.status(500).json({ error: 'Lỗi server' });
+    }
+});
+
+// Đặt route có param ở cuối cùng
+router.get("/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const practice = await practiceModel.getPracticeById(id);
+        if (practice.length > 0) {
+            res.render('practice-detail', { practice: practice[0] });
+        } else {
+            res.status(404).send('Không tìm thấy bài tập');
+        }
+    } catch (error) {
+        console.error('Lỗi:', error);
+        res.status(500).send('Lỗi server');
+    }
+});
 
 module.exports = router;

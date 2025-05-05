@@ -1,78 +1,100 @@
-const { query } = require('../config/database');
+const practiceDetailsModel = require('../models/practice-detailsModel');
+const practiceModel = require('../models/practiceModel');
 
-const practiceController = {
-    // Lấy tất cả bài tập
-    getAll: async (req, res) => {
+class PracticeController {
+    async showDetails(req, res) {
         try {
-            const baiTaps = await query('SELECT * FROM BaiTap');
-            res.render('practice', { 
-                user: req.session.user,
-                baiTaps: baiTaps 
+            const practiceId = req.params.id;
+            const practice = await practiceDetailsModel.getPracticeDetails(practiceId);
+
+            if (!practice) {
+                return res.status(404).render('error', {
+                    error: 'Không tìm thấy bài tập',
+                    user: req.session.user // Thêm user vào đây
+                });
+            }
+
+            res.render('practice-details', {
+                practice: practice,
+                user: req.session.user // Thêm user vào đây
             });
         } catch (error) {
             console.error('Lỗi:', error);
-            res.status(500).send('Lỗi server');
-        }
-    },
-
-    // Lấy chi tiết bài tập theo ID
-    getById: async (req, res) => {
-        try {
-            const [baiTap] = await query(
-                'SELECT * FROM BaiTap WHERE MaBaiTap = ?', 
-                [req.params.id]
-            );
-            if (!baiTap) {
-                return res.status(404).send('Không tìm thấy bài tập');
-            }
-            res.render('practiceDetail', { 
-                user: req.session.user,
-                baiTap: baiTap 
+            res.status(500).render('error', {
+                error: 'Có lỗi xảy ra khi tải thông tin bài tập',
+                user: req.session.user // Thêm user vào đây
             });
-        } catch (error) {
-            console.error('Lỗi:', error);
-            res.status(500).send('Lỗi server');
-        }
-    },
-
-    // Tìm kiếm bài tập
-    search: async (req, res) => {
-        try {
-            const { q } = req.query;
-            const baiTaps = await query(
-                'SELECT * FROM BaiTap WHERE TieuDe LIKE ? OR MoTa LIKE ?',
-                [`%${q}%`, `%${q}%`]
-            );
-            res.json(baiTaps);
-        } catch (error) {
-            console.error('Lỗi:', error);
-            res.status(500).json({ error: 'Lỗi server' });
-        }
-    },
-
-    // Lọc bài tập
-    filter: async (req, res) => {
-        try {
-            const { mucDo, chuDe } = req.query;
-            let sql = 'SELECT * FROM BaiTap WHERE 1=1';
-            const params = [];
-
-            if (mucDo) {
-                sql += ' AND MucDoKho = ?';
-                params.push(mucDo);
-            }
-            if (chuDe) {
-                sql += ' AND MaChuDe = ?';
-                params.push(chuDe);
-            }
-
-            const baiTaps = await query(sql, params);
-            res.json(baiTaps);
-        } catch (error) {
-            console.error('Lỗi:', error);
-            res.status(500).json({ error: 'Lỗi server' });
         }
     }
-};
 
-module.exports = practiceController;
+    async showEditForm(req, res) {
+        try {
+            const practiceId = req.params.id;
+            const practice = await practiceDetailsModel.getPracticeDetails(practiceId);
+            const topics = await practiceModel.getAllTopics();
+
+            if (!practice) {
+                return res.status(404).render('error', {
+                    error: 'Không tìm thấy bài tập',
+                    user: req.session.user
+                });
+            }
+
+            res.render('practice-edit', {
+                practice: practice,
+                topics: topics,
+                user: req.session.user
+            });
+        } catch (error) {
+            console.error('Lỗi:', error);
+            res.status(500).render('error', {
+                error: 'Có lỗi xảy ra khi tải thông tin bài tập',
+                user: req.session.user
+            });
+        }
+    }
+
+    async updatePractice(req, res) {
+        try {
+            const practiceId = req.params.id;
+            const { TieuDe, MoTa, MucDoKho, MaChuDe } = req.body;
+
+            const result = await practiceDetailsModel.updatePractice(practiceId, {
+                TieuDe,
+                MoTa,
+                MucDoKho,
+                MaChuDe
+            });
+
+            if (result.success) {
+                res.json({ success: true, message: 'Cập nhật bài tập thành công' });
+            } else {
+                res.status(400).json({ success: false, message: result.message });
+            }
+        } catch (error) {
+            console.error('Lỗi:', error);
+            res.status(500).json({ 
+                success: false, 
+                message: 'Có lỗi xảy ra khi cập nhật bài tập' 
+            });
+        }
+    }
+
+    async deletePractice(req, res) {
+        try {
+            const practiceId = req.params.id;
+            const result = await practiceDetailsModel.deletePractice(practiceId);
+
+            if (result.success) {
+                return res.status(200).json({ message: result.message });
+            } else {
+                return res.status(404).json({ message: result.message });
+            }
+        } catch (error) {
+            console.error('Lỗi:', error);
+            return res.status(500).json({ message: 'Có lỗi xảy ra khi xóa bài tập' });
+        }
+    }
+}
+
+module.exports = new PracticeController();

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh Sửa Bài Tập | Code Master</title>
+    <!-- Thêm các file CSS cần thiết -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/practice.css">
+</head>
+<body>
+    <header class="header fixed"><%- include('partials/header') %></header>
+    
+    <main class="practice-main">
+        <div class="main-content">
+            <form id="editPracticeForm" class="practice-form">
+                <h1>Chỉnh Sửa Bài Tập</h1>
+                
+                <div class="form-group">
+                    <label for="TieuDe">Tiêu đề:</label>
+                    <input type="text" id="TieuDe" name="TieuDe" value="<%= practice.TieuDe %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="MoTa">Mô tả:</label>
+                    <textarea id="MoTa" name="MoTa" required><%= practice.MoTa %></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="MucDoKho">Độ khó:</label>
+                    <select id="MucDoKho" name="MucDoKho" required>
+                        <option value="Dễ" <%= practice.MucDoKho === 'Dễ' ? 'selected' : '' %>>Dễ</option>
+                        <option value="Trung Bình" <%= practice.MucDoKho === 'Trung Bình' ? 'selected' : '' %>>Trung Bình</option>
+                        <option value="Khó" <%= practice.MucDoKho === 'Khó' ? 'selected' : '' %>>Khó</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="MaChuDe">Chủ đề:</label>
+                    <select id="MaChuDe" name="MaChuDe" required>
+                        <% topics.forEach(function(topic) { %>
+                            <option value="<%= topic.MaChuDe %>" 
+                                <%= practice.MaChuDe === topic.MaChuDe ? 'selected' : '' %>>
+                                <%= topic.TenChuDe %>
+                            </option>
+                        <% }); %>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-save">Lưu thay đổi</button>
+                    <button type="button" class="btn-cancel" onclick="window.location.href='/practice/details/<%= practice.MaBaiTap %>'">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer><%- include('partials/footer') %></footer>
+
+    <script>
+        document.getElementById('editPracticeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            try {
+                const formData = new FormData(e.target);
+                const data = {
+                    TieuDe: formData.get('TieuDe'),
+                    MoTa: formData.get('MoTa'),
+                    MucDoKho: formData.get('MucDoKho'),
+                    MaChuDe: parseInt(formData.get('MaChuDe'))
+                };
+
+                // Kiểm tra dữ liệu trước khi gửi
+                if (!data.MucDoKho) {
+                    throw new Error('Vui lòng chọn độ khó cho bài tập');
+                }
+
+                console.log('Dữ liệu gửi đi:', data);
+
+                const response = await fetch('/practice/edit/<%= practice.MaBaiTap %>', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    alert(result.message);
+                    window.location.href = '/practice/details/<%= practice.MaBaiTap %>';
+                } else {
+                    throw new Error(result.message || 'Có lỗi xảy ra khi cập nhật bài tập');
+                }
+            } catch (error) {
+                console.error('Lỗi:', error);
+                alert(error.message || 'Có lỗi xảy ra khi cập nhật bài tập');
+            }
+        });
+    </script>
+</body>
+</html>

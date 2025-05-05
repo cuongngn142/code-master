@@ -72,14 +72,22 @@
   });
 
   document.getElementById("logoutBtn").addEventListener("click", async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("/auth/logout");
-      if (response.ok) {
-        window.location.href = "/";
+      e.preventDefault();
+      try {
+          const response = await fetch('/logout', {  // Changed from /auth/logout to /logout
+              method: 'GET',  // Changed from POST to GET since it's simpler
+              credentials: 'same-origin'
+          });
+          
+          if (response.ok) {
+              window.location.href = "/";  // Redirect to home page after successful logout
+          } else {
+              console.error('Logout failed');
+              window.location.href = "/";  // Redirect anyway to avoid stuck state
+          }
+      } catch (error) {
+          console.error('Logout error:', error);
+          window.location.href = "/";  // Redirect even on error
       }
-    } catch (error) {
-      console.error("Lỗi đăng xuất:", error);
-    }
   });
 </script>

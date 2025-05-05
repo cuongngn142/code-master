@@ -3,6 +3,9 @@ const app = express();
 const path = require("path");
 const session = require('express-session');
 const database = require('./config/database');  
+const topicRoutes = require('./routes/topicRoutes');
+const practiceRoutes = require('./routes/practiceRoute');
+const topicDetailRouter = require('./routes/topic-detailRoute');
 
 // Middleware
 app.use(express.json());
@@ -24,14 +27,25 @@ const authRoute = require("./routes/authRoute");
 const profileRouter = require('./routes/profileRoute');
 const settingsRouter = require('./routes/settingsRoute');
 const practiceRouter = require('./routes/practiceRoute');
-app.use('/practice', practiceRouter);
+const addpracticeRouter = require('./routes/addpracticeRoute');
+
+app.use('/', addpracticeRouter);
+app.use('/practice', practiceRoutes);
 app.use('/profile', profileRouter);
 app.use('/settings', settingsRouter);
+app.use(topicRoutes);
+app.use('/', topicDetailRouter);
 
 app.use("/", indexRoute);
 app.use("/auth", authRoute);
 
 const PORT = process.env.PORT || 3000;
+
+// Thêm route xử lý đăng xuất
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/');
+});
 
 app.listen(PORT, () => {
   console.log(
