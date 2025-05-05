@@ -16,7 +16,7 @@
 .practice-filter .search-box input {
   width: 500px;
   height: 30px;
-  font-family: "Poppins", sans-serif;
+  font-family: "Be Vietnam Pro", sans-serif;
   padding: 20px;
   border-radius: 15px;
 }
@@ -43,22 +43,26 @@
   width: 100px;
   height: 30px;
   border-radius: 15px;
-  font-family: "Poppins", sans-serif;
+  font-family: "Be Vietnam Pro", sans-serif;
 }
 
 .filter-options .topic-filter {
   width: 100px;
   height: 30px;
-  font-family: "Poppins", sans-serif;
+  font-family: "Be Vietnam Pro", sans-serif;
   border-radius: 15px;
 }
 
 .btn-add-practice {
-  font-family: "Poppins", sans-serif;
-  font-size: 1.3rem;
-  border-radius: 15px;
-  background: rgb(58, 123, 219);
-  color: #fff;
+  background: #4d96ff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .btn-add-practice .fa-plus {
@@ -85,18 +89,18 @@
 }
 .practice-meta {
   display: flex;
+  justify-content: center;
   flex-direction: column;
   gap: 10px;
-  padding: 10px 0;
 }
 
 .practice-title {
   font-weight: 700;
   font-size: 2.2rem;
-  font-family: "Poppins", sans-serif;
+  font-family: "Be Vietnam Pro", sans-serif;
 }
 
-.practice-meta .difficulty strong {
+.practice-meta .practice-difficulty strong {
   color: green;
 }
 
@@ -105,9 +109,7 @@
 }
 
 .practice-description {
-  padding: 20px 0;
-  height: 58px;
-  line-height: 1.2;
+  margin-bottom: 50px;
 }
 
 .practice-info .btn-solve {
@@ -125,7 +127,8 @@
   margin: 20px 0;
   font-weight: 500;
   font-size: 1.7rem;
-  font-family: "Poppins", sans-serif;
+  font-family: "Be Vietnam Pro", sans-serif;
+  margin-bottom: 25px;
 }
 
 .btnn {
@@ -157,6 +160,7 @@
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-top: 70px;
+  margin-bottom: 140px;
 }
 
 .practice-details .practice-title {
@@ -199,7 +203,8 @@
   margin-top: 30px;
 }
 
-.btn-edit, .btn-delete {
+.btn-edit,
+.btn-delete {
   padding: 10px 20px;
   border: none;
   border-radius: 8px;
@@ -212,7 +217,7 @@
 }
 
 .btn-edit {
-  background: #4CAF50;
+  background: #4caf50;
   color: white;
 }
 
@@ -253,55 +258,55 @@
 }
 
 .form-group {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
 }
 
 .form-group input,
 .form-group textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
 }
 
 .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .btn-primary {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .btn-secondary {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .btn-primary:hover {
-    background-color: #45a049;
+  background-color: #45a049;
 }
 
 .btn-secondary:hover {
-    background-color: #da190b;
+  background-color: #da190b;
 }
 
 .btn-add-topic {
@@ -353,14 +358,14 @@
 
 .btn-details {
   padding: 8px 16px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s;
-  font-family: "Poppins", sans-serif;
+  font-family: "Be Vietnam Pro", sans-serif;
 }
 
 .btn-details:hover {
@@ -371,7 +376,7 @@
 .practice-info .btn-solve {
   padding: 8px 16px;
   font-size: 14px;
-  font-family: "Poppins", sans-serif;
+  font-family: "Be Vietnam Pro", sans-serif;
   transition: background-color 0.3s;
 }
 
@@ -379,39 +384,48 @@
   background-color: #e5a800;
 }
 
-
 .error-main {
-    margin-top: 100px;
-    text-align: center;
-    padding: 20px;
+  margin-top: 100px;
+  text-align: center;
+  padding: 20px;
 }
 
 .error-container {
-    max-width: 600px;
-    margin: 0 auto;
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .error-container h1 {
-    color: #f44336;
-    font-size: 2.4rem;
-    margin-bottom: 20px;
+  color: #f44336;
+  font-size: 2.4rem;
+  margin-bottom: 20px;
 }
 
 .btn-back {
-    display: inline-block;
-    padding: 10px 20px;
-    background: #4CAF50;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    margin-top: 20px;
-    transition: background-color 0.3s;
+  display: inline-block;
+  padding: 10px 20px;
+  background: #4caf50;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  margin-top: 20px;
+  transition: background-color 0.3s;
 }
 
 .btn-back:hover {
-    background: #45a049;
+  background: #45a049;
+}
+
+#MucDoKho,
+#MaChuDe {
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.practice-form {
+  margin-bottom: 55px;
 }

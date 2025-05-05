@@ -8,7 +8,7 @@
   <div class="body">
     <!-- logo -->
     <a href="/">
-      <img src="./images/img/logo-web.png" alt="logo" id="logo" />
+      <img src="/images/img/logo-web.png" alt="logo" id="logo" />
     </a>
 
     <!-- Navbar -->
@@ -31,7 +31,7 @@
             class="avatar"
           />
         </div>
-        <span class="user-name"><%= user.HoTen %></span>
+        <span class="user-name"><%= user.hoTen %></span>
       </button>
       <ul class="profile-dropdown" id="profileDropdown">
         <li>
@@ -72,22 +72,23 @@
   });
 
   document.getElementById("logoutBtn").addEventListener("click", async (e) => {
-      e.preventDefault();
-      try {
-          const response = await fetch('/logout', {  // Changed from /auth/logout to /logout
-              method: 'GET',  // Changed from POST to GET since it's simpler
-              credentials: 'same-origin'
-          });
-          
-          if (response.ok) {
-              window.location.href = "/";  // Redirect to home page after successful logout
-          } else {
-              console.error('Logout failed');
-              window.location.href = "/";  // Redirect anyway to avoid stuck state
-          }
-      } catch (error) {
-          console.error('Logout error:', error);
-          window.location.href = "/";  // Redirect even on error
+    e.preventDefault();
+    try {
+      const response = await fetch("/logout", {
+        // Changed from /auth/logout to /logout
+        method: "GET", // Changed from POST to GET since it's simpler
+        credentials: "same-origin",
+      });
+
+      if (response.ok) {
+        window.location.href = "/"; // Redirect to home page after successful logout
+      } else {
+        console.error("Logout failed");
+        window.location.href = "/"; // Redirect anyway to avoid stuck state
       }
+    } catch (error) {
+      console.error("Logout error:", error);
+      window.location.href = "/"; // Redirect even on error
+    }
   });
 </script>

@@ -72,10 +72,10 @@
               <div class="practice-info">
                 <div class="practice-meta">
                   <h3 class="practice-title"><%= practice.TieuDe %></h3>
-                  <p class="difficulty">Độ khó: <strong><%= practice.DoKho %></strong></p>
-                  <p>Chủ đề: <strong><%= practice.TenChuDe %></strong></p>
+                  <p class="practice-difficulty">Độ khó: <strong><%= practice.MucDoKho %></strong></p>
+                  <p class="practice-topic">Chủ đề: <strong><%= practice.TenChuDe %></strong></p>
+                  <p class="practice-description">Mô Tả: <%= practice.MoTa %></p>
                 </div>
-                <p class="practice-description"><%= practice.MoTa %></p>
                 <div class="practice-buttons">
                   <button class="btn-solve" onclick="window.location.href='/practice/solve/<%= practice.MaBaiTap %>'">
                     Giải bài

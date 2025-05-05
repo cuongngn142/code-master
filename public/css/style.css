@@ -3,7 +3,7 @@
 }
 
 :root {
-  --font-heading: "Sen", sans-serif;
+  --font-heading: "Be Vietnam Pro", sans-serif;
   --font-heading2: "Be Vietnam Pro", sans-serif;
   --primary-color: #ffbb00;
 }
@@ -14,7 +14,7 @@ html {
 
 body {
   font-size: 1.6rem;
-  font-family: "Poppins", sans-serif;
+  font-family: "Be Vietnam Pro", sans-serif;
 }
 
 /* ------------------Common--------------------- */
