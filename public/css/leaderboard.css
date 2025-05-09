@@ -1,0 +1,124 @@
+.leaderboard-center {
+  margin-bottom: 40px;
+}
+
+.leaderboard-main .main-content .leaderboard-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.leaderboard-main .main-content .leaderboard-center .list-top-3-users {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  margin-top: 30px;
+}
+
+.leaderboard-center .list-top-3-users .user-info img {
+  height: 70px;
+  width: 70px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px inset #37b1fd;
+}
+
+.leaderboard-center .user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  padding: 30px 90px;
+}
+
+.leaderboard-center .user-info .user-score {
+  position: absolute;
+  top: 85%;
+  width: 100%;
+  text-align: center;
+  background-color: #b6b2b2;
+  padding: 10px 0;
+}
+
+.leaderboard-center .user-info.top1 {
+  margin-bottom: 50px;
+}
+
+.leaderboard-center .user-info.top1 .user-score {
+  background-color: rgb(234, 163, 11);
+}
+.leaderboard-center .user-info.top2 .user-score {
+  background-color: rgb(203, 142, 102);
+}
+.leaderboard-center .user-info.top3 .user-score {
+  background-color: rgb(167, 177, 177);
+}
+
+.leaderboard-center .user-info.top1 .user-top {
+  color: rgb(234, 163, 11);
+}
+
+.leaderboard-center .user-info.top2 .user-top {
+  color: rgb(203, 142, 102);
+}
+
+.leaderboard-center .user-info.top3 .user-top {
+  color: rgb(167, 177, 177);
+}
+
+.leaderboard-center .user-info .user-top {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.leaderboard-content .list-top-more-users .user-list .user-item-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: #8b8b8bd2;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard-content .list-top-more-users .user-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.leaderboard-content .list-top-more-users .user-list .user-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-list .user-item .user-name {
+  display: flex;
+  color: #37b1fd;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 150px;
+  overflow: hidden;
+}
+
+.user-list .user-item .user-name p {
+  flex: 1; 
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+}
+
+.user-list .user-item .user-name img {
+  display: flex;
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px inset #37b1fd;
+  flex-shrink: 0;
+}
