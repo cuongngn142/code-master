@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giải Bài Tập | Code Master</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/solve.css">
+    <!-- Thêm Monaco Editor -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.30.1/min/vs/loader.min.js"></script>
+</head>
+<body>
+    <header class="header fixed"><%- include('partials/header') %></header>
+
+    <main class="solve-main">
+        <div class="main-content">
+            <div class="problem-section">
+                <h1><%= baiTap.TieuDe %></h1>
+                <div class="problem-meta">
+                    <span class="difficulty">Độ khó: <%= baiTap.MucDoKho %></span>
+                    <span class="topic">Chủ đề: <%= baiTap.TenChuDe %></span>
+                </div>
+                <div class="problem-description">
+                    <%= baiTap.MoTa %>
+                </div>
+                <div class="test-cases">
+                    <h2>Các test mẫu:</h2>
+                    <% boTest.forEach(function(test) { %>
+                        <div class="test-case">
+                            <div class="input">
+                                <h3>Input:</h3>
+                                <pre><%= test.DuLieuDauVao %></pre>
+                            </div>
+                            <div class="output">
+                                <h3>Output mong đợi:</h3>
+                                <pre><%= test.DauRaMongDoi %></pre>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            </div>
+
+            <div class="code-section">
+                <div class="code-header">
+                    <select id="language">
+                        <% ngonNgu.forEach(function(lang) { %>
+                            <option value="<%= lang.MaNgonNgu %>"><%= lang.TenNgonNgu %></option>
+                        <% }); %>
+                    </select>
+                    <button id="runBtn">Chạy thử</button>
+                    <button id="submitBtn">Nộp bài</button>
+                </div>
+                <div id="editor"></div>
+                <div id="result" class="hidden">
+                    <h3>Kết quả:</h3>
+                    <div class="result-content"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.30.1/min/vs' }});
+        require(['vs/editor/editor.main'], function() {
+            const editor = monaco.editor.create(document.getElementById('editor'), {
+                value: '// Viết code của bạn ở đây',
+                language: 'javascript',
+                theme: 'vs-dark',
+                automaticLayout: true
+            });
+
+            // Thêm hàm chạy thử code
+            document.getElementById('runBtn').addEventListener('click', async () => {
+                const code = editor.getValue();
+                const language = document.getElementById('language').value;
+                const testCases = <%- JSON.stringify(boTest) %>;
+
+                try {
+                    const response = await fetch('/api/solve/submit', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            maBaiTap: '<%= baiTap.MaBaiTap %>',
+                            maNgonNgu: language,
+                            maNguon: code
+                        })
+                    });
+
+                    const data = await response.json();
+                    const resultDiv = document.getElementById('result');
+                    resultDiv.classList.remove('hidden');
+
+                    if (data.success) {
+                        // So sánh kết quả với test case
+                        const isCorrect = testCases.some(test => test.DauRaMongDoi === data.ketQua.output.trim());
+                        const resultStatus = isCorrect ? 'Đúng' : 'Sai';
+                        const statusColor = isCorrect ? 'green' : 'red';
+
+                        resultDiv.querySelector('.result-content').innerHTML = `
+                            <p>Trạng thái: <span style="color: ${statusColor}">${resultStatus}</span></p>
+                            <p>Thời gian chạy: ${data.ketQua.thoiGianChay}ms</p>
+                            <p>Bộ nhớ sử dụng: ${data.ketQua.boNhoSuDung}KB</p>
+                            <p>Output của bạn: <pre>${data.ketQua.output}</pre></p>
+                            <p>Output mong đợi: <pre>${testCases[0].DauRaMongDoi}</pre></p>
+                        `;
+                    } else {
+                        resultDiv.querySelector('.result-content').innerHTML = `
+                            <p class="error">Lỗi: ${data.message}</p>
+                        `;
+                    }
+                } catch (error) {
+                    console.error('Lỗi:', error);
+                }
+            });
+
+            // Giữ nguyên code xử lý nút Submit
+            document.getElementById('submitBtn').addEventListener('click', async () => {
+                const code = editor.getValue();
+                const language = document.getElementById('language').value;
+
+                try {
+                    const response = await fetch('/api/solve/submit', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            maBaiTap: '<%= baiTap.MaBaiTap %>',
+                            maNgonNgu: language,
+                            maNguon: code
+                        })
+                    });
+
+                    const data = await response.json();
+                    const resultDiv = document.getElementById('result');
+                    resultDiv.classList.remove('hidden');
+
+                    if (data.success) {
+                        resultDiv.querySelector('.result-content').innerHTML = `
+                            <p>Trạng thái: ${data.ketQua.trangThai}</p>
+                            <p>Thời gian chạy: ${data.ketQua.thoiGianChay}ms</p>
+                            <p>Bộ nhớ sử dụng: ${data.ketQua.boNhoSuDung}KB</p>
+                            <p>Output: <pre>${data.ketQua.output}</pre></p>
+                        `;
+                    } else {
+                        resultDiv.querySelector('.result-content').innerHTML = `
+                            <p class="error">Lỗi: ${data.message}</p>
+                        `;
+                    }
+                } catch (error) {
+                    console.error('Lỗi:', error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

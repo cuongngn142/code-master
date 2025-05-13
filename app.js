@@ -6,6 +6,8 @@ const database = require('./config/database');
 const topicRoutes = require('./routes/topicRoutes');
 const practiceRoutes = require('./routes/practiceRoute');
 const topicDetailRouter = require('./routes/topic-detailRoute');
+const leaderboardRoute = require('./routes/leaderboardRoute');
+const solveRoutes = require('./routes/solveRoutes');
 
 // Middleware
 app.use(express.json());
@@ -35,7 +37,10 @@ app.use('/profile', profileRouter);
 app.use('/settings', settingsRouter);
 app.use(topicRoutes);
 app.use('/', topicDetailRouter);
+app.use('/', solveRoutes);  // Thay đổi thành
+app.use('/practice', solveRoutes);
 
+app.use('/', leaderboardRoute);
 app.use("/", indexRoute);
 app.use("/auth", authRoute);
 

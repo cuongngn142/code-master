@@ -83,8 +83,11 @@ function initDatabase() {
             MaTest INTEGER,
             DauRaThucTe TEXT,
             DatYeuCau INTEGER NOT NULL,
+            Diem INTEGER DEFAULT 0,
+            MaNguoiDung INTEGER,
             FOREIGN KEY (MaBaiNop) REFERENCES BaiNop(MaBaiNop) ON DELETE CASCADE,
-            FOREIGN KEY (MaTest) REFERENCES BoTest(MaTest)
+            FOREIGN KEY (MaTest) REFERENCES BoTest(MaTest),
+            FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung) ON DELETE CASCADE
         )`);
 
         // Bảng DanhSachBaiTap

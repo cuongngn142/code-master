@@ -21,7 +21,7 @@
       </ul>
     </nav>
     <!-- Đăng nhập -->
-    <% if (user) { %>
+    <% if (typeof user !== 'undefined' && user) { %>
     <div class="user-profile">
       <button class="profile-btn" id="profileBtn">
         <div class="avatar-container">
@@ -42,8 +42,7 @@
         </li>
         <li>
           <a href="#" id="logoutBtn"
-            ><i class="fas fa-sign-out-alt"></i> Đăng xuất</a
-          >
+            ><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
         </li>
       </ul>
     </div>
@@ -75,20 +74,19 @@
     e.preventDefault();
     try {
       const response = await fetch("/logout", {
-        // Changed from /auth/logout to /logout
-        method: "GET", // Changed from POST to GET since it's simpler
+        method: "GET",
         credentials: "same-origin",
       });
 
       if (response.ok) {
-        window.location.href = "/"; // Redirect to home page after successful logout
+        window.location.href = "/";
       } else {
         console.error("Logout failed");
-        window.location.href = "/"; // Redirect anyway to avoid stuck state
+        window.location.href = "/";
       }
     } catch (error) {
       console.error("Logout error:", error);
-      window.location.href = "/"; // Redirect even on error
+      window.location.href = "/";
     }
   });
 </script>

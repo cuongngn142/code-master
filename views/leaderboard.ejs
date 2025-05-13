@@ -12,9 +12,13 @@
       href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@700&display=swap"
       rel="stylesheet"
     />
-    <link rel="icon" href="./images/img/bg-logo-web.png" type="image/png" />
+    <!-- Sửa đường dẫn favicon -->
+    <link rel="icon" href="/images/img/bg-logo-web.png" type="image/png" />
     <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/leaderboard.css" />
+    <!-- Sửa đường dẫn từ ./css thành /css -->
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/leaderboard.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
@@ -22,28 +26,26 @@
     <title>Xếp Hạng | Code Master</title>
   </head>
   <body>
+    <!-- Thêm header -->
+    <header class="header fixed"><%- include('partials/header') %></header>
     <main class="leaderboard-main">
       <div class="main-content">
         <div class="leaderboard-center">
           <div class="list-top-3-users">
             <div class="user-info top2">
               <img
-                src="/public/images/img/hero-img.jpg"
-                alt=""
-                class="user-avatar"
-              />
-              <p class="user-name">Gia Kiet</p>
+                <!-- Sửa đường dẫn từ /public/images thành /images -->
+                <img src="/images/img/hero-img.jpg" alt="" class="user-avatar" />
+                <p class="user-name">Gia Kiet</p>
               <p class="user-top">Top 2</p>
               <p class="user-score">Score: 1100</p>
             </div>
 
             <div class="user-info top1">
               <img
-                src="/public/images/img/study1.jpg"
-                alt=""
-                class="user-avatar"
-              />
-              <p class="user-name">Mieu Hoai</p>
+                <!-- Sửa tất cả đường dẫn từ /public/images thành /images -->
+                <img src="/images/img/study1.jpg" alt="" class="user-avatar" />
+                <p class="user-name">Mieu Hoai</p>
               <p class="user-top">Top 1</p>
               <p class="user-score">Score: 1200</p>
             </div>
