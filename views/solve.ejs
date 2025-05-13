@@ -83,19 +83,20 @@
         // Thiết lập phiên bản dựa trên ngôn ngữ
         switch (language) {
           case "javascript":
-            version = "18.15.0"; // Node.js version
-            break;
           case "nodejs":
-            version = "18.15.0"; // Node.js version
+            version = "18.15.0";
             break;
+          case "python":
           case "python3":
-            version = "3.10.0"; // Python 3 version
+          case "py":
+          case "py3":
+            version = "3.10.0";
             break;
           case "java":
-            version = "15.0.2"; // Java version
+            version = "15.0.2";
             break;
           default:
-            version = "*"; // Default version for others
+            version = "*";
             break;
         }
 
