@@ -17,10 +17,10 @@
         <div class="problem-section">
           <h1><%= baiTap.TieuDe %></h1>
           <div class="problem-meta">
-            <span class="difficulty">Độ khó: <%= baiTap.MucDoKho %></span>
-            <span class="topic">Chủ đề: <%= baiTap.TenChuDe %></span>
+            <span class="difficulty"><strong>Độ khó:</strong> <%= baiTap.MucDoKho %></span>
+            <span class="topic"><strong>Chủ đề:</strong> <%= baiTap.TenChuDe %></span>
           </div>
-          <div class="problem-description"><%= baiTap.MoTa %></div>
+          <div class="problem-description"><strong>Mô tả bài tập:</strong> <%= baiTap.MoTa %></div>
         </div>
 
         <div class="code-section">
@@ -128,12 +128,10 @@
         // Kiểm tra nếu có lỗi trả về
         if (result.error) {
           resultDiv.querySelector(".result-content").innerHTML = ` 
-            <p><strong>Đã có lỗi xảy ra:</strong></p>
             <pre>${result.error}</pre>
           `;
         } else {
           resultDiv.querySelector(".result-content").innerHTML = ` 
-            <p><strong>Output:</strong></p>
             <pre>${result.run.stdout}</pre>
           `;
         }

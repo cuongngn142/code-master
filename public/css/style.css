@@ -15,6 +15,9 @@ html {
 body {
   font-size: 1.6rem;
   font-family: "Be Vietnam Pro", sans-serif;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ------------------Common--------------------- */
@@ -555,6 +558,7 @@ Nhưng hiện nay, một số trình duyệt (ví dụ Edge mới) đã hỗ tr�
 .footers {
   background: #f1e2b8;
   padding: 20px 0; /* Thêm padding cho footer */
+  margin-top: 130px; 
 }
 
 /* Item list */
@@ -586,7 +590,7 @@ Nhưng hiện nay, một số trình duyệt (ví dụ Edge mới) đã hỗ tr�
 
 /* Các tiêu đề .desc.main */
 .footers .item-list .desc.main {
-  color: #6876f3;
+  color: #333333;
   font-weight: bold; /* Làm nổi bật tiêu đề */
   margin-bottom: 10px; /* Khoảng cách dưới tiêu đề */
 }
@@ -619,6 +623,8 @@ Nhưng hiện nay, một số trình duyệt (ví dụ Edge mới) đã hỗ tr�
   width: 30px;
   height: 30px;
   display: block;
+  border-radius: 5px;
+  padding: 5px;
 }
 
 .footers .social-links .social-icon.fb img {
