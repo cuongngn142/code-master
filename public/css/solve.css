@@ -90,6 +90,20 @@ li {
   background: #1976d2;
 }
 
+#submitBtn {
+  background: #5ac927;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+#submitBtn:hover {
+  background: #1976d2;
+}
+
 #editor {
   height: 500px;
 }

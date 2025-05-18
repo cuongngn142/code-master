@@ -1,21 +1,22 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+const sqlite3 = require("sqlite3").verbose();
+const path = require("path");
 
-const dbPath = path.join(__dirname, '../database.sqlite');
+const dbPath = path.join(__dirname, "../database.sqlite");
 const db = new sqlite3.Database(dbPath, (err) => {
-    if (err) {
-        console.log('Lỗi kết nối SQLite:', err);
-    } else {
-        console.log('Đã kết nối thành công đến SQLite');
-        initDatabase();
-    }
+  if (err) {
+    console.log("Lỗi kết nối SQLite:", err);
+  } else {
+    console.log("Đã kết nối thành công đến SQLite");
+    db.run("PRAGMA foreign_keys = ON");
+    initDatabase();
+  }
 });
 
 // Hàm khởi tạo database
 function initDatabase() {
-    db.serialize(() => {
-        // Bảng NguoiDung
-        db.run(`CREATE TABLE IF NOT EXISTS NguoiDung (
+  db.serialize(() => {
+    // Bảng NguoiDung
+    db.run(`CREATE TABLE IF NOT EXISTS NguoiDung (
             MaNguoiDung INTEGER PRIMARY KEY AUTOINCREMENT,
             HoTen TEXT NOT NULL,
             Email TEXT NOT NULL UNIQUE,
@@ -24,15 +25,15 @@ function initDatabase() {
             NgayTao DATETIME DEFAULT CURRENT_TIMESTAMP
         )`);
 
-        // Bảng ChuDe
-        db.run(`CREATE TABLE IF NOT EXISTS ChuDe (
+    // Bảng ChuDe
+    db.run(`CREATE TABLE IF NOT EXISTS ChuDe (
             MaChuDe INTEGER PRIMARY KEY AUTOINCREMENT,
             TenChuDe TEXT NOT NULL UNIQUE,
             MoTa TEXT
         )`);
 
-        // Bảng BaiTap
-        db.run(`CREATE TABLE IF NOT EXISTS BaiTap (
+    // Bảng BaiTap
+    db.run(`CREATE TABLE IF NOT EXISTS BaiTap (
             MaBaiTap INTEGER PRIMARY KEY AUTOINCREMENT,
             TieuDe TEXT NOT NULL,
             MoTa TEXT NOT NULL,
@@ -44,14 +45,14 @@ function initDatabase() {
             FOREIGN KEY (NguoiTao) REFERENCES NguoiDung(MaNguoiDung) ON DELETE SET NULL
         )`);
 
-        // Bảng NgonNguLapTrinh
-        db.run(`CREATE TABLE IF NOT EXISTS NgonNguLapTrinh (
+    // Bảng NgonNguLapTrinh
+    db.run(`CREATE TABLE IF NOT EXISTS NgonNguLapTrinh (
             MaNgonNgu INTEGER PRIMARY KEY AUTOINCREMENT,
             TenNgonNgu TEXT NOT NULL UNIQUE
         )`);
 
-        // Bảng BaiNop
-        db.run(`CREATE TABLE IF NOT EXISTS BaiNop (
+    // Bảng BaiNop
+    db.run(`CREATE TABLE IF NOT EXISTS BaiNop (
             MaBaiNop INTEGER PRIMARY KEY AUTOINCREMENT,
             MaNguoiDung INTEGER,
             MaBaiTap INTEGER,
@@ -66,8 +67,8 @@ function initDatabase() {
             FOREIGN KEY (MaNgonNgu) REFERENCES NgonNguLapTrinh(MaNgonNgu) ON DELETE CASCADE
         )`);
 
-        // Bảng BoTest
-        db.run(`CREATE TABLE IF NOT EXISTS BoTest (
+    // Bảng BoTest
+    db.run(`CREATE TABLE IF NOT EXISTS BoTest (
             MaTest INTEGER PRIMARY KEY AUTOINCREMENT,
             MaBaiTap INTEGER,
             DuLieuDauVao TEXT NOT NULL,
@@ -76,22 +77,24 @@ function initDatabase() {
             FOREIGN KEY (MaBaiTap) REFERENCES BaiTap(MaBaiTap) ON DELETE CASCADE
         )`);
 
-        // Bảng KetQuaBaiNop
-        db.run(`CREATE TABLE IF NOT EXISTS KetQuaBaiNop (
-            MaKetQua INTEGER PRIMARY KEY AUTOINCREMENT,
-            MaBaiNop INTEGER,
-            MaTest INTEGER,
-            DauRaThucTe TEXT,
-            DatYeuCau INTEGER NOT NULL,
-            Diem INTEGER DEFAULT 0,
-            MaNguoiDung INTEGER,
-            FOREIGN KEY (MaBaiNop) REFERENCES BaiNop(MaBaiNop) ON DELETE CASCADE,
-            FOREIGN KEY (MaTest) REFERENCES BoTest(MaTest),
-            FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung) ON DELETE CASCADE
-        )`);
+    // Bảng KetQuaBaiNop
+    db.run(`CREATE TABLE IF NOT EXISTS KetQuaBaiNop (
+        MaKetQua INTEGER PRIMARY KEY AUTOINCREMENT,
+        MaBaiTap INTEGER,
+        MaNguoiDung INTEGER,
+        MaNgonNgu INTEGER,
+        MaTest INTEGER,
+        DauRaThucTe TEXT,
+        DatYeuCau INTEGER NOT NULL,
+        Diem INTEGER DEFAULT 0,
+        ThoiGianNop DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (MaBaiTap) REFERENCES BaiTap(MaBaiTap) ON DELETE CASCADE,
+        FOREIGN KEY (MaTest) REFERENCES BoTest(MaTest),
+        FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung) ON DELETE CASCADE,
+        FOREIGN KEY (MaNgonNgu) REFERENCES NgonNguLapTrinh(MaNgonNgu) ON DELETE CASCADE)`);
 
-        // Bảng DanhSachBaiTap
-        db.run(`CREATE TABLE IF NOT EXISTS DanhSachBaiTap (
+    // Bảng DanhSachBaiTap
+    db.run(`CREATE TABLE IF NOT EXISTS DanhSachBaiTap (
             MaDanhSach INTEGER PRIMARY KEY AUTOINCREMENT,
             TenDanhSach TEXT NOT NULL,
             MoTa TEXT,
@@ -101,8 +104,8 @@ function initDatabase() {
             FOREIGN KEY (MaNguoiTao) REFERENCES NguoiDung(MaNguoiDung) ON DELETE SET NULL
         )`);
 
-        // Bảng ChiTietDanhSachBaiTap
-        db.run(`CREATE TABLE IF NOT EXISTS ChiTietDanhSachBaiTap (
+    // Bảng ChiTietDanhSachBaiTap
+    db.run(`CREATE TABLE IF NOT EXISTS ChiTietDanhSachBaiTap (
             MaChiTiet INTEGER PRIMARY KEY AUTOINCREMENT,
             MaDanhSach INTEGER,
             MaBaiTap INTEGER,
@@ -112,8 +115,8 @@ function initDatabase() {
             UNIQUE(MaDanhSach, MaBaiTap)
         )`);
 
-        // Bảng LichSuHoatDong
-        db.run(`CREATE TABLE IF NOT EXISTS LichSuHoatDong (
+    // Bảng LichSuHoatDong
+    db.run(`CREATE TABLE IF NOT EXISTS LichSuHoatDong (
             MaHoatDong INTEGER PRIMARY KEY AUTOINCREMENT,
             MaNguoiDung INTEGER,
             MoTaHoatDong TEXT,
@@ -121,38 +124,38 @@ function initDatabase() {
             FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung) ON DELETE CASCADE
         )`);
 
-        // Bảng XepHang
-        db.run(`CREATE TABLE IF NOT EXISTS XepHang (
+    // Bảng XepHang
+    db.run(`CREATE TABLE IF NOT EXISTS XepHang (
             MaXepHang INTEGER PRIMARY KEY AUTOINCREMENT,
             MaNguoiDung INTEGER,
             DiemSo INTEGER DEFAULT 0,
             HuyHieu TEXT,
             FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung) ON DELETE CASCADE
         )`);
-    });
+  });
 }
 
 // Promise wrapper cho các truy vấn
 function query(sql, params = []) {
-    return new Promise((resolve, reject) => {
-        db.all(sql, params, (err, rows) => {
-            if (err) reject(err);
-            else resolve(rows);
-        });
+  return new Promise((resolve, reject) => {
+    db.all(sql, params, (err, rows) => {
+      if (err) reject(err);
+      else resolve(rows);
     });
+  });
 }
 
 function run(sql, params = []) {
-    return new Promise((resolve, reject) => {
-        db.run(sql, params, function(err) {
-            if (err) reject(err);
-            else resolve({ id: this.lastID, changes: this.changes });
-        });
+  return new Promise((resolve, reject) => {
+    db.run(sql, params, function (err) {
+      if (err) reject(err);
+      else resolve({ id: this.lastID, changes: this.changes });
     });
+  });
 }
 
 module.exports = {
-    db,
-    query,
-    run
+  db,
+  query,
+  run,
 };

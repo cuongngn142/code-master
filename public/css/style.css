@@ -784,6 +784,7 @@ Nhưng hiện nay, một số trình duyệt (ví dụ Edge mới) đã hỗ tr�
 }
 
 .tab-content .forgot-password {
+  padding-top: 15px;
   text-align: right;
   font-size: 1.5rem;
   font-family: var(--font-heading);
