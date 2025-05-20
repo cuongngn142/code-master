@@ -40,33 +40,8 @@
 
     <!-- login modal -->
     <%- include('partials/login') %>
-  </body>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // Lấy đường dẫn hiện tại
-      const currentPath = window.location.pathname;
-
-      // Xử lý active cho navbar
-      const navItems = document.querySelectorAll(".navbar ul li a");
-      if (navItems.length > 0) {
-        // Xóa active cũ
-        navItems.forEach(link => {
-          const parentLi = link.parentElement;
-          parentLi.classList.remove("active");
-          
-          // Kiểm tra nếu href của link khớp với đường dẫn hiện tại
-          if (link.getAttribute("href") === currentPath) {
-            parentLi.classList.add("active");
-          }
-        });
-
-        // Bỏ sự kiện click vì không cần thiết nữa
-        // Khi click vào link, trang sẽ tự chuyển và load lại, 
-        // đoạn code ở trên sẽ tự động xử lý active dựa trên currentPath
-      }
-
+    <script>
       // Phần active cho các gạch chân dưới blog
-      // Second error at line 610
       const dots = document.querySelectorAll(".dot");
       const blogList = document.querySelector(".blog-list");
       if (dots.length > 0 && blogList) {
@@ -78,6 +53,6 @@
           });
         });
       }
-    });
-  </script>
+    </script>
+  </body>
 </html>
