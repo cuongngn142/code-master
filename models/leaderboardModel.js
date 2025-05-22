@@ -1,29 +1,45 @@
 const database = require('../config/database');
 
 class LeaderboardModel {
-    async getTopUsers() {
-        return new Promise((resolve, reject) => {
-            try {
-                database.query(`
-                    SELECT 
-                        nd.HoTen,
-                        COALESCE(xh1.DiemSo, 0) as DiemSo,
-                        (SELECT COUNT(*) + 1 FROM XepHang xh2 WHERE xh2.DiemSo > xh1.DiemSo) as XepHang
-                    FROM NguoiDung nd
-                    LEFT JOIN XepHang xh1 ON nd.MaNguoiDung = xh1.MaNguoiDung
-                    ORDER BY DiemSo DESC
-                `, [], (err, rows) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(rows);
-                    }
-                });
-            } catch (error) {
-                reject(error);
-            }
-        });
+  async getTopUsers() {
+    const sql = `
+      SELECT 
+        u.MaNguoiDung,
+        u.HoTen, 
+        COALESCE(SUM(CASE WHEN k.DatYeuCau = 1 THEN k.Diem ELSE 0 END), 0) as DiemSo 
+      FROM NguoiDung u
+      LEFT JOIN KetQuaBaiNop k ON u.MaNguoiDung = k.MaNguoiDung
+      GROUP BY u.MaNguoiDung, u.HoTen
+      ORDER BY DiemSo DESC
+      LIMIT 3
+    `;
+    
+    try {
+      return await database.query(sql);
+    } catch (error) {
+      throw error;
     }
+  }
+
+  async getOtherUsers() {
+    const sql = `
+      SELECT 
+        u.MaNguoiDung,
+        u.HoTen,
+        COALESCE(SUM(CASE WHEN k.DatYeuCau = 1 THEN k.Diem ELSE 0 END), 0) as DiemSo 
+      FROM NguoiDung u
+      LEFT JOIN KetQuaBaiNop k ON u.MaNguoiDung = k.MaNguoiDung
+      GROUP BY u.MaNguoiDung, u.HoTen
+      ORDER BY DiemSo DESC
+      LIMIT 9 OFFSET 3
+    `;
+    
+    try {
+      return await database.query(sql);
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = new LeaderboardModel();

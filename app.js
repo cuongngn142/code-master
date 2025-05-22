@@ -40,7 +40,7 @@ app.use('/', topicDetailRouter);
 app.use('/', solveRoutes);  // Thay đổi thành
 app.use('/practice', solveRoutes);
 
-app.use('/', leaderboardRoute);
+app.use('/leaderboard', leaderboardRoute);
 app.use("/", indexRoute);
 app.use("/auth", authRoute);
 

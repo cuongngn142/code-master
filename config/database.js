@@ -135,7 +135,6 @@ function initDatabase() {
   });
 }
 
-// Promise wrapper cho các truy vấn
 function query(sql, params = []) {
   return new Promise((resolve, reject) => {
     db.all(sql, params, (err, rows) => {
