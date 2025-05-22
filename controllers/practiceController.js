@@ -59,6 +59,14 @@ class PracticeController {
             const practiceId = req.params.id;
             const { TieuDe, MoTa, MucDoKho, MaChuDe } = req.body;
 
+            // Kiểm tra dữ liệu đầu vào
+            if (!TieuDe || !MoTa || !MucDoKho || !MaChuDe) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Vui lòng điền đầy đủ thông tin bài tập'
+                });
+            }
+
             const result = await practiceDetailsModel.updatePractice(practiceId, {
                 TieuDe,
                 MoTa,
