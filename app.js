@@ -8,6 +8,8 @@ const practiceRoutes = require('./routes/practiceRoute');
 const topicDetailRouter = require('./routes/topic-detailRoute');
 const leaderboardRoute = require('./routes/leaderboardRoute');
 const solveRoutes = require('./routes/solveRoutes');
+const blogRouter = require('./routes/blogRoute');
+const aboutRouter = require('./routes/aboutRoute');
 
 // Middleware
 app.use(express.json());
@@ -43,6 +45,7 @@ app.use('/practice', solveRoutes);
 app.use('/leaderboard', leaderboardRoute);
 app.use("/", indexRoute);
 app.use("/auth", authRoute);
+app.use('/blog', blogRouter);
 
 const PORT = process.env.PORT || 3000;
 
@@ -57,3 +60,4 @@ app.listen(PORT, () => {
     `🚀 Server đang chạy tại: \x1b[34mhttp://localhost:${PORT}\x1b[0m`
   );
 });
+app.use('/about', aboutRouter);
