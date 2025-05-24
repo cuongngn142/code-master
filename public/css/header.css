@@ -34,7 +34,7 @@
   object-fit: cover;
 }
 
-.user-name {
+header .user-name {
   font-weight: 500;
   color: #333;
 }
@@ -96,4 +96,63 @@
 
 .open-modal-btn i {
   font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .header .body {
+    flex-wrap: wrap;
+    padding: 20px 16px;
+  }
+
+  .header .body #logo {
+    width: 80px;
+    height: 56px;
+  }
+
+  .navbar {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 12px;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 12px 0;
+  }
+
+  .navbar ul li {
+    text-align: center;
+    width: 100%;
+  }
+
+  .navbar ul li a {
+    display: block;
+    padding: 12px;
+    font-size: 1.4rem;
+  }
+
+  .navbar li.active a::after {
+    display: none;
+  }
+
+  .user-profile,
+  .open-modal-btn {
+    margin-top: 12px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .profile-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .profile-dropdown {
+    right: 50%;
+    transform: translateX(50%);
+    min-width: 100%;
+  }
 }

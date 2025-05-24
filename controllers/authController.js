@@ -20,7 +20,7 @@ exports.register = async (req, res) => {
     try {
         const { hoTen, email, matKhau, vaiTro } = req.body;
         await UserModel.register(hoTen, email, matKhau, vaiTro);
-        res.json({ success: true, message: 'Đăng ký thành công' });
+        res.json({ success: true, message: 'Đăng ký thành công bbbb' });
     } catch (error) {
         if (error.message.includes('Violation of UNIQUE KEY constraint')) {
             res.json({ success: false, message: 'Email đã tồn tại' });

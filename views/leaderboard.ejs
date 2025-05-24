@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/leaderboard.css" />
     <link
-      rel="stylesheet" 
+      rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
     <title>Xếp Hạng | Code Master</title>
@@ -27,35 +27,46 @@
         <div class="leaderboard-center">
           <div class="list-top-3-users">
             <% if (topUsers && topUsers.length > 0) { %>
-              <!-- Top 2 -->
-              <% if (topUsers[1]) { %>
-                <div class="user-info top2">
-                  <img src="/images/img/avatar-default.png" alt="" class="user-avatar" />
-                  <p class="user-name"><%= topUsers[1].HoTen %></p>
-                  <p class="user-top">Top 2</p>
-                  <p class="user-score"><%= topUsers[1].DiemSo %> điểm</p>
-                </div>
-              <% } %>
-            
-              <!-- Top 1 -->
-              <div class="user-info top1">
-                <img src="/images/img/avatar-default.png" alt="" class="user-avatar" />
-                <p class="user-name"><%= topUsers[0].HoTen %></p>
-                <p class="user-top">Top 1</p>
-                <p class="user-score"><%= topUsers[0].DiemSo %> điểm</p>
-              </div>
+            <!-- Top 2 -->
+            <% if (topUsers[1]) { %>
+            <div class="user-info top2">
+              <img
+                src="/images/img/avatar-default.png"
+                alt=""
+                class="user-avatar"
+              />
+              <p class="user-name"><%= topUsers[1].HoTen %></p>
+              <p class="user-top">Top 2</p>
+              <p class="user-score"><%= topUsers[1].DiemSo %> điểm</p>
+            </div>
+            <% } %>
 
-              <!-- Top 3 -->
-              <% if (topUsers[2]) { %>
-                <div class="user-info top3">
-                  <img src="/images/img/avatar-default.png" alt="" class="user-avatar" />
-                  <p class="user-name"><%= topUsers[2].HoTen %></p>
-                  <p class="user-top">Top 3</p>
-                  <p class="user-score"><%= topUsers[2].DiemSo %> điểm</p>
-                </div>
-              <% } %>
-            <% } else { %>
-              <p class="no-data">Chưa có dữ liệu xếp hạng</p>
+            <!-- Top 1 -->
+            <div class="user-info top1">
+              <img
+                src="/images/img/avatar-default.png"
+                alt=""
+                class="user-avatar"
+              />
+              <p class="user-name"><%= topUsers[0].HoTen %></p>
+              <p class="user-top">Top 1</p>
+              <p class="user-score"><%= topUsers[0].DiemSo %> điểm</p>
+            </div>
+
+            <!-- Top 3 -->
+            <% if (topUsers[2]) { %>
+            <div class="user-info top3">
+              <img
+                src="/images/img/avatar-default.png"
+                alt=""
+                class="user-avatar"
+              />
+              <p class="user-name"><%= topUsers[2].HoTen %></p>
+              <p class="user-top">Top 3</p>
+              <p class="user-score"><%= topUsers[2].DiemSo %> điểm</p>
+            </div>
+            <% } %> <% } else { %>
+            <p class="no-data">Chưa có dữ liệu xếp hạng</p>
             <% } %>
           </div>
         </div>
@@ -68,28 +79,24 @@
                 <p class="user-name">Tên người dùng</p>
                 <p class="user-score">Điểm số</p>
               </div>
-              
-              <% if (otherUsers && otherUsers.length > 0) { %>
-                <% otherUsers.forEach((user, index) => { %>
-                  <div class="user-item">
-                    <div class="user-top"><p><%= index + 4 %></p></div>
-                    <div class="user-name">
-                      <img src="/images/img/avatar-default.png" alt="" />
-                      <p><%= user.HoTen %></p>
-                    </div>
-                    <p class="user-score"><%= user.DiemSo %> điểm</p>
-                  </div>
-                <% }) %>
-              <% } else { %>
-                <p class="no-data">Không có thêm dữ liệu xếp hạng</p>
+
+              <% if (otherUsers && otherUsers.length > 0) { %> <%
+              otherUsers.forEach((user, index) => { %>
+              <div class="user-item">
+                <div class="user-top"><p><%= index + 4 %></p></div>
+                <div class="user-name">
+                  <img src="/images/img/avatar-default.png" alt="" />
+                  <p><%= user.HoTen %></p>
+                </div>
+                <p class="user-score"><%= user.DiemSo %> điểm</p>
+              </div>
+              <% }) %> <% } else { %>
+              <p class="no-data">Không có thêm dữ liệu xếp hạng</p>
               <% } %>
             </div>
           </div>
         </div>
       </div>
     </main>
-    <footer><%- include('partials/footer') %></footer>
-    <script src="/js/script.js"></script>
-    <%- include('partials/login') %>
   </body>
 </html>

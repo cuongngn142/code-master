@@ -140,3 +140,80 @@
 .btn-secondary:hover {
   background: #757575;
 }
+
+@media (max-width: 768px) {
+  .topic-detail-main {
+    padding: 80px 15px 30px;
+  }
+
+  .topic-detail-main h1 {
+    font-size: 1.8em;
+  }
+
+  .topic-list {
+    margin-bottom: 80px;
+  }
+
+  .topic-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .topic-info h3 {
+    font-size: 1.1em;
+  }
+
+  .topic-info p {
+    font-size: 0.95em;
+  }
+
+  .topic-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .modal-content {
+    padding: 20px;
+    margin: 80px 15px;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .topic-detail-main h1 {
+    font-size: 1.5em;
+  }
+
+  .topic-info h3 {
+    font-size: 1em;
+  }
+
+  .topic-info p {
+    font-size: 0.9em;
+  }
+
+  .btn-edit,
+  .btn-delete,
+  .btn-primary,
+  .btn-secondary {
+    padding: 6px 12px;
+    font-size: 0.9em;
+  }
+
+  .modal-content {
+    padding: 15px;
+    margin: 60px 10px;
+  }
+
+  .form-group label {
+    font-size: 0.95em;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 6px;
+    font-size: 0.9em;
+  }
+}

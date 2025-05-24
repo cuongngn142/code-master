@@ -13,12 +13,7 @@
       rel="stylesheet"
     />
     <link rel="icon" href="./images/img/bg-logo-web.png" type="image/png" />
-    <!-- Thay đổi từ -->
-    <link rel="stylesheet" href="./css/reset.css" />
-    <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/practice.css" />
-    
-    <!-- Thành -->
+
     <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/practice.css" />
@@ -57,12 +52,15 @@
               </option>
               <% }); %> <% } %>
             </select>
-            <% if (user && user.VaiTro === 'Admin') { %>
+            <% if (user && user.vaiTro && user.vaiTro.trim() === 'Admin') { %>
             <button class="btn-add-topic">
               <i class="fas fa-plus"></i>
               Thêm chủ đề
             </button>
-            <button class="btn-topic-detail" onclick="window.location.href='/topic/detail'">
+            <button
+              class="btn-topic-detail"
+              onclick="window.location.href='/topic/detail'"
+            >
               <i class="fas fa-list"></i>
               Chi tiết chủ đề
             </button>
@@ -103,13 +101,14 @@
                 >
                   Giải bài
                 </button>
-                <% if (user && user.VaiTro && user.VaiTro.trim() === 'Admin') { %>
-                  <button
-                    class="btn-details"
-                    onclick="window.location.href='/practice/details/<%= practice.MaBaiTap %>'"
-                  >
-                    Chi tiết
-                  </button>
+                <% if (user && user.vaiTro && user.vaiTro.trim() === 'Admin') {
+                %>
+                <button
+                  class="btn-details"
+                  onclick="window.location.href='/practice/details/<%= practice.MaBaiTap %>'"
+                >
+                  Chi tiết
+                </button>
                 <% } %>
               </div>
             </div>
@@ -120,7 +119,7 @@
         </div>
       </div>
     </main>
-  <!--Modal login-->
+    <!--Modal login-->
     <%- include('partials/login') %>
     <!-- footer -->
     <footer><%- include('partials/footer') %></footer>
@@ -217,7 +216,7 @@
 
   // Mở modal khi click nút thêm chủ đề
   addTopicBtn.addEventListener("click", function () {
-    addTopicModal.style.display = "block";
+    addTopicModal.style.display = "flex";
   });
 
   // Đóng modal khi ấn nút hủy

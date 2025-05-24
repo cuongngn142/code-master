@@ -20,6 +20,10 @@ body {
   flex-direction: column;
 }
 
+header.scrolled {
+  background-color: #ffffff;
+}
+
 /* ------------------Common--------------------- */
 
 /* để khi ng dùng thêm 1 đoạn văn bản hay link dài liền mạch trình duyệt
@@ -94,6 +98,7 @@ Nhưng hiện nay, một số trình duyệt (ví dụ Edge mới) đã hỗ tr�
 
 .header {
   background-color: #ffffff;
+  transition: background-color 0.5s ease;
 }
 
 .header .body {
@@ -558,7 +563,7 @@ Nhưng hiện nay, một số trình duyệt (ví dụ Edge mới) đã hỗ tr�
 .footers {
   background: #f1e2b8;
   padding: 20px 0; /* Thêm padding cho footer */
-  margin-top: 130px; 
+  margin-top: 130px;
 }
 
 /* Item list */
@@ -666,6 +671,98 @@ Nhưng hiện nay, một số trình duyệt (ví dụ Edge mới) đã hỗ tr�
   max-width: 250px; /* Hoặc giá trị lớn hơn tùy nội dung */
 }
 
+@media (max-width: 768px) {
+  .footers {
+    padding: 15px 0;
+    margin-top: 80px;
+  }
+
+  .footers .item-list {
+    flex-direction: column; /* Xếp dọc các item */
+    gap: 20px;
+    align-items: center;
+  }
+
+  .footers .item-list .item {
+    min-width: 100%; /* Item chiếm toàn bộ chiều rộng */
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  .footers .item-list .desc {
+    max-width: 100%; /* Loại bỏ giới hạn chiều rộng */
+    margin: 4px 0;
+  }
+
+  .footers .item-list .desc.sub-content {
+    max-width: 80%;
+    font-size: 1.4rem;
+    margin: 8px auto;
+  }
+
+  .footers .item-list .item:last-child .desc {
+    max-width: 80%;
+  }
+
+  .footers .item .social-links {
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .footers .item .social-links .social-icon img {
+    width: 25px;
+    height: 25px;
+    padding: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footers {
+    padding: 10px 0;
+    margin-top: 60px;
+  }
+
+  .footers .item-list {
+    gap: 15px;
+  }
+
+  .footers .item-list .item {
+    font-size: 1.2rem;
+  }
+
+  .footers .item-list .desc.main {
+    margin-bottom: 8px;
+  }
+
+  .footers .item-list .desc {
+    margin: 3px 0;
+  }
+
+  .footers .item-list .desc.sub-content {
+    font-size: 1.2rem;
+    max-width: 90%;
+  }
+
+  .footers .item-list .item:last-child .desc {
+    max-width: 90%;
+  }
+
+  .footers .item-list .logo img {
+    width: 80px;
+    height: 56px;
+  }
+
+  .footers .item .social-links {
+    gap: 8px;
+  }
+
+  .footers .item .social-links .social-icon img {
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+  }
+}
+
 /* ==================================== LOGIN =================================== */
 .auth-Modal {
   display: none;
@@ -759,6 +856,13 @@ Nhưng hiện nay, một số trình duyệt (ví dụ Edge mới) đã hỗ tr�
   border-radius: 8px;
 }
 
+.tab-content select {
+  padding: 12px;
+  font-size: 1.4rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
 .tab-content .remember-me,
 .tab-content .terms {
   display: flex;
@@ -796,4 +900,163 @@ Nhưng hiện nay, một số trình duyệt (ví dụ Edge mới) đã hỗ tr�
 }
 .tab-content .forgot-password a:hover {
   text-decoration: underline;
+}
+
+@media screen and (max-width: 1024px) {
+  .hero .body {
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .hero .media-block .img {
+    width: 90%;
+    height: auto;
+  }
+
+  .hero .content-block {
+    width: 100%;
+    padding: 0;
+    align-items: center;
+  }
+
+  .hero .heading {
+    font-size: 4rem;
+    text-align: center;
+  }
+
+  .hero .desc {
+    font-size: 1.8rem;
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  .hero .cta-group {
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .hero .desc-stats {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero .desc-stats p {
+    padding: 10px 16px;
+    font-size: 1.6rem;
+  }
+
+  .benefits .card-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .features .body {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .features .images {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .features .images img {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .features .content {
+    text-align: center;
+    padding: 20px;
+  }
+
+  .main-content {
+    width: 100%;
+    padding: 0 16px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 55%;
+  }
+
+  .hero {
+    padding: 40px 0;
+  }
+
+  .hero .heading {
+    font-size: 3rem;
+  }
+
+  .hero .desc {
+    font-size: 1.6rem;
+  }
+
+  .hero .btn {
+    font-size: 1.4rem;
+    padding: 10px 20px;
+  }
+
+  .hero .media-block .img {
+    width: 100%;
+    height: auto;
+  }
+
+  .hero .desc-stats strong {
+    font-size: 2.4rem;
+  }
+
+  .hero .desc-stats p {
+    font-size: 1.4rem;
+  }
+
+  .btn {
+    font-size: 1.4rem;
+    padding: 10px 16px;
+  }
+
+  .benefits .title {
+    font-size: 3.2rem;
+    padding: 0 10px;
+  }
+
+  .benefits .card-item {
+    width: 100%;
+    text-align: center;
+  }
+
+  .features .images img {
+    width: 100%;
+    height: auto;
+  }
+
+  .hero .desc-stats strong {
+    font-size: 3rem;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar a {
+    padding: 8px 0;
+  }
+
+  .header .body {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header .action {
+    margin-left: 0;
+    justify-content: center;
+  }
 }
