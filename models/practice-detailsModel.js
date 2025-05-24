@@ -162,16 +162,26 @@ class PracticeDetailsModel {
             }
 
             // Cập nhật thông tin bài tập
-            const result = await query(
+            await query(
                 'UPDATE BaiTap SET TieuDe = ?, MoTa = ?, MucDoKho = ?, MaChuDe = ? WHERE MaBaiTap = ?',
-                [data.TieuDe.trim(), data.MoTa.trim(), data.MucDoKho, data.MaChuDe, id]
+                [data.TieuDe, data.MoTa, data.MucDoKho, data.MaChuDe, id]
             );
 
-            if (!result || result.affectedRows === 0) {
-                return {
-                    success: false,
-                    message: 'Không thể cập nhật bài tập'
-                };
+            // Cập nhật hoặc tạo mới bộ test
+            const existingTest = await query('SELECT * FROM BoTest WHERE MaBaiTap = ?', [id]);
+            
+            if (existingTest.length > 0) {
+                // Cập nhật bộ test hiện có
+                await query(
+                    'UPDATE BoTest SET DuLieuDauVao = ?, DauRaMongDoi = ? WHERE MaBaiTap = ?',
+                    [data.DuLieuDauVao, data.DauRaMongDoi, id]
+                );
+            } else {
+                // Tạo mới bộ test
+                await query(
+                    'INSERT INTO BoTest (MaBaiTap, DuLieuDauVao, DauRaMongDoi) VALUES (?, ?, ?)',
+                    [id, data.DuLieuDauVao, data.DauRaMongDoi]
+                );
             }
 
             return {
@@ -182,7 +192,7 @@ class PracticeDetailsModel {
             console.error('Lỗi khi cập nhật bài tập:', error);
             return {
                 success: false,
-                message: 'Có lỗi xảy ra trong quá trình cập nhật bài tập'
+                message: 'Có lỗi xảy ra khi cập nhật bài tập'
             };
         }
     }

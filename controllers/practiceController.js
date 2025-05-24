@@ -57,10 +57,10 @@ class PracticeController {
     async updatePractice(req, res) {
         try {
             const practiceId = req.params.id;
-            const { TieuDe, MoTa, MucDoKho, MaChuDe } = req.body;
+            const { TieuDe, MoTa, MucDoKho, MaChuDe, DuLieuDauVao, DauRaMongDoi } = req.body;
 
             // Kiểm tra dữ liệu đầu vào
-            if (!TieuDe || !MoTa || !MucDoKho || !MaChuDe) {
+            if (!TieuDe || !MoTa || !MucDoKho || !MaChuDe || !DuLieuDauVao || !DauRaMongDoi) {
                 return res.status(400).json({
                     success: false,
                     message: 'Vui lòng điền đầy đủ thông tin bài tập'
@@ -71,7 +71,9 @@ class PracticeController {
                 TieuDe,
                 MoTa,
                 MucDoKho,
-                MaChuDe
+                MaChuDe,
+                DuLieuDauVao,
+                DauRaMongDoi
             });
 
             if (result.success) {
@@ -81,9 +83,9 @@ class PracticeController {
             }
         } catch (error) {
             console.error('Lỗi:', error);
-            res.status(500).json({ 
-                success: false, 
-                message: 'Có lỗi xảy ra khi cập nhật bài tập' 
+            res.status(500).json({
+                success: false,
+                message: 'Có lỗi xảy ra khi cập nhật bài tập'
             });
         }
     }
@@ -94,13 +96,16 @@ class PracticeController {
             const result = await practiceDetailsModel.deletePractice(practiceId);
 
             if (result.success) {
-                return res.status(200).json({ message: result.message });
+                res.json({ success: true, message: result.message });
             } else {
-                return res.status(404).json({ message: result.message });
+                res.status(400).json({ success: false, message: result.message });
             }
         } catch (error) {
             console.error('Lỗi:', error);
-            return res.status(500).json({ message: 'Có lỗi xảy ra khi xóa bài tập' });
+            res.status(500).json({
+                success: false,
+                message: 'Có lỗi xảy ra khi xóa bài tập'
+            });
         }
     }
 }

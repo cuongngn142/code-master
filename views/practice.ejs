@@ -57,14 +57,12 @@
               </option>
               <% }); %> <% } %>
             </select>
+            <% if (user && user.VaiTro === 'Admin') { %>
             <button class="btn-add-topic">
               <i class="fas fa-plus"></i>
               Thêm chủ đề
             </button>
-            <button
-              class="btn-topic-detail"
-              onclick="window.location.href='/topic/detail'"
-            >
+            <button class="btn-topic-detail" onclick="window.location.href='/topic/detail'">
               <i class="fas fa-list"></i>
               Chi tiết chủ đề
             </button>
@@ -72,6 +70,7 @@
               <i class="fas fa-plus"></i>
               Thêm bài tập
             </button>
+            <% } %>
           </div>
         </div>
 
@@ -104,12 +103,14 @@
                 >
                   Giải bài
                 </button>
-                <button
-                  class="btn-details"
-                  onclick="window.location.href='/practice/details/<%= practice.MaBaiTap %>'"
-                >
-                  Chi tiết
-                </button>
+                <% if (user && user.VaiTro && user.VaiTro.trim() === 'Admin') { %>
+                  <button
+                    class="btn-details"
+                    onclick="window.location.href='/practice/details/<%= practice.MaBaiTap %>'"
+                  >
+                    Chi tiết
+                  </button>
+                <% } %>
               </div>
             </div>
           </div>
@@ -119,7 +120,8 @@
         </div>
       </div>
     </main>
-
+  <!--Modal login-->
+    <%- include('partials/login') %>
     <!-- footer -->
     <footer><%- include('partials/footer') %></footer>
     <script>

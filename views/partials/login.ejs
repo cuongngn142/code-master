@@ -127,11 +127,16 @@ document.getElementById('login').addEventListener('submit', async (e) => {
     <!-- Register Form -->
     <div class="tab-content" id="register">
       <h2>Đăng Ký</h2>
+      <!-- Inside the Register Form -->
       <form>
         <input type="text" name="hoTen" placeholder="Họ tên" required />
         <input type="email" name="email" placeholder="Email" required />
         <input type="password" name="matKhau" placeholder="Mật khẩu" required />
         <input type="password" name="xacNhanMatKhau" placeholder="Xác nhận mật khẩu" required />
+        <select name="VaiTro" required>
+          <option value="User">User</option>
+          <option value="Admin">Admin</option>
+        </select>
         <div class="terms">
           <input type="checkbox" id="terms" required />
           <label for="terms">Tôi đồng ý với điều khoản</label>
@@ -225,6 +230,7 @@ document.getElementById('login').addEventListener('submit', async (e) => {
       const matKhau = e.target.querySelector('input[name="matKhau"]').value;
       const xacNhanMatKhau = e.target.querySelector('input[name="xacNhanMatKhau"]').value;
       const dieuKhoan = e.target.querySelector('#terms').checked;
+      const vaiTro = e.target.querySelector('select[name="VaiTro"]').value;
   
       // Kiểm tra dữ liệu
       if (!validateEmail(email)) {
@@ -248,7 +254,7 @@ document.getElementById('login').addEventListener('submit', async (e) => {
               headers: {
                   'Content-Type': 'application/json'
               },
-              body: JSON.stringify({ hoTen, email, matKhau })
+              body: JSON.stringify({ hoTen, email, matKhau, vaiTro })
           });
   
           const data = await res.json();

@@ -1,14 +1,14 @@
 const { sql, poolPromise } = require('../config/database');
 
 class UserModel {
-    async register(hoTen, email, matKhau) {
+    register: async (hoTen, email, matKhau, vaiTro) => {
         try {
             const pool = await poolPromise;
             const result = await pool.request()
                 .input('HoTen', sql.NVarChar(50), hoTen)
                 .input('Email', sql.NVarChar(50), email)
                 .input('MatKhau', sql.NVarChar(50), matKhau)
-                .input('VaiTro', sql.NVarChar(50), 'User')
+                .input('VaiTro', sql.NVarChar(50), vaiTro)
                 .query('INSERT INTO NguoiDung (HoTen, Email, MatKhau, VaiTro) VALUES (@HoTen, @Email, @MatKhau, @VaiTro)');
             return result;
         } catch (error) {
