@@ -4,7 +4,7 @@ class PracticeDetailsModel {
     async getPracticeDetails(id) {
         try {
             const practice = await query(
-                'SELECT bt.*, cd.TenChuDe FROM BaiTap bt JOIN ChuDe cd ON bt.MaChuDe = cd.MaChuDe WHERE bt.MaBaiTap = ?',
+                'SELECT bts.* , bt.*, cd.TenChuDe FROM BoTest bts JOIN BaiTap bt ON bts.MaBaiTap = bt.MaBaiTap JOIN ChuDe cd ON bt.MaChuDe = cd.MaChuDe WHERE bt.MaBaiTap = ?',
                 [id]
             );
             return practice[0];
@@ -134,6 +134,7 @@ class PracticeDetailsModel {
                     message: 'Mã chủ đề không được để trống'
                 };
             }
+            
 
             // Kiểm tra bài tập có tồn tại không
             const practice = await query(
@@ -173,14 +174,14 @@ class PracticeDetailsModel {
             if (existingTest.length > 0) {
                 // Cập nhật bộ test hiện có
                 await query(
-                    'UPDATE BoTest SET DuLieuDauVao = ?, DauRaMongDoi = ? WHERE MaBaiTap = ?',
-                    [data.DuLieuDauVao, data.DauRaMongDoi, id]
+                    'UPDATE BoTest SET DuLieuDauVao = ?, DauRaMongDoi = ?,  KieuDuLieu = ? WHERE MaBaiTap = ?',
+                    [data.DuLieuDauVao, data.DauRaMongDoi, data.KieuDuLieu, id]
                 );
             } else {
                 // Tạo mới bộ test
                 await query(
-                    'INSERT INTO BoTest (MaBaiTap, DuLieuDauVao, DauRaMongDoi) VALUES (?, ?, ?)',
-                    [id, data.DuLieuDauVao, data.DauRaMongDoi]
+                    'INSERT INTO BoTest (MaBaiTap, DuLieuDauVao, DauRaMongDoi, KieuDuLieu) VALUES (?, ?, ?, ?)',
+                    [id, data.DuLieuDauVao, data.DauRaMongDoi, data.KieuDuLieu]
                 );
             }
 

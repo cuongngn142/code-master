@@ -10,7 +10,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.30.1/min/vs/loader.min.js"></script>
   </head>
   <body data-user-id="<%= user ? user.id : 0 %>">
-    <header class="header fixed"><%- include('partials/header') %></header>
 
     <main class="solve-main">
       <div class="main-content">
@@ -154,9 +153,10 @@
           return;
         }
 
-        const userOutput = normalizeNewlines(
+        let userOutput = normalizeNewlines(
           resultDiv.querySelector(".result-content").textContent
         );
+
         if (!userOutput) {
           alert("Không tìm thấy kết quả đầu ra, vui lòng chạy thử lại.");
           return;
@@ -175,7 +175,60 @@
 
           for (const testCase of testCases) {
             const expectedOutput = normalizeNewlines(testCase.DauRaMongDoi);
-            if (userOutput === expectedOutput) {
+            const kieuDuLieu = testCase.KieuDuLieu.toLowerCase();
+
+            let userOutputFormat, expectedOutputFormat;
+            let isMatch = false;
+
+            switch (kieuDuLieu) {
+              case "string":
+                // So sánh chuỗi trim 2 đầu
+                userOutputFormat = userOutput.trim();
+                expectedOutputFormat = expectedOutput.trim();
+                isMatch = userOutputFormat === expectedOutputFormat;
+                break;
+
+              case "number":
+                // Chuyển sang number rồi so sánh
+                userOutputFormat = Number(userOutput);
+                expectedOutputFormat = Number(expectedOutput);
+                isMatch = userOutputFormat === expectedOutputFormat;
+                break;
+
+              case "boolean":
+                // Chuyển sang boolean rồi so sánh
+                try {
+                  userOutputFormat = JSON.parse(userOutput.toLowerCase());
+                  expectedOutputFormat = JSON.parse(
+                    expectedOutput.toLowerCase()
+                  );
+                  isMatch = userOutputFormat === expectedOutputFormat;
+                } catch {
+                  isMatch = false;
+                }
+                break;
+
+              case "array":
+              case "object":
+                // JSON.parse rồi so sánh chuỗi JSON
+                try {
+                  userOutputFormat = JSON.parse(userOutput);
+                  expectedOutputFormat = JSON.parse(expectedOutput);
+                  isMatch =
+                    JSON.stringify(userOutputFormat) ===
+                    JSON.stringify(expectedOutputFormat);
+                } catch {
+                  isMatch = false;
+                }
+                break;
+
+              default:
+                // Mặc định so sánh chuỗi bình thường
+                isMatch = userOutput === expectedOutput;
+                break;
+            }
+
+            if (isMatch) {
               matchedTestCase = testCase;
               break;
             }

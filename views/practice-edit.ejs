@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="/css/practice.css">
 </head>
 <body>
-    <header class="header fixed"><%- include('partials/header') %></header>
     
     <main class="practice-main">
         <div class="main-content">
@@ -57,6 +56,18 @@
                     <textarea id="DauRaMongDoi" name="DauRaMongDoi" required><%= practice.DauRaMongDoi %></textarea>
                 </div>
 
+                <div class="form-group">
+                    <label for="KieuDuLieu">Kiểu dữ liệu:</label>
+                    <select id="KieuDuLieu" name="KieuDuLieu" required>
+                        <option value="">Chọn kiểu dữ liệu</option>
+                        <option value="number" <%= practice.KieuDuLieu === 'number' ? 'selected' : '' %>>Number</option>
+                        <option value="string" <%= practice.KieuDuLieu === 'string' ? 'selected' : '' %>>String</option>
+                        <option value="boolean" <%= practice.KieuDuLieu === 'boolean' ? 'selected' : '' %>>Boolean</option>
+                        <option value="array" <%= practice.KieuDuLieu === 'array' ? 'selected' : '' %>>Array</option>
+                        <option value="object" <%= practice.KieuDuLieu === 'object' ? 'selected' : '' %>>Object</option>
+                    </select>
+                </div>
+
                 <div class="form-actions">
                     <button type="submit" class="btn btn-save">Lưu thay đổi</button>
                     <button type="button" class="btn btn-cancel" onclick="window.location.href='/practice/details/<%= practice.MaBaiTap %>'">Hủy chỉnh sửa</button>
@@ -64,8 +75,6 @@
             </form>
         </div>
     </main>
-
-    <footer><%- include('partials/footer') %></footer>
 
     <script>
         document.getElementById('editPracticeForm').addEventListener('submit', async (e) => {
@@ -79,8 +88,10 @@
                     MucDoKho: formData.get('MucDoKho'),
                     MaChuDe: parseInt(formData.get('MaChuDe')),
                     DuLieuDauVao: formData.get('DuLieuDauVao'),
-                    DauRaMongDoi: formData.get('DauRaMongDoi')
+                    DauRaMongDoi: formData.get('DauRaMongDoi'),
+                    KieuDuLieu: formData.get('KieuDuLieu')
                 };
+
 
                 // Thêm kiểm tra dữ liệu
                 if (!data.TieuDe.trim()) {

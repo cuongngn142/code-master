@@ -79,6 +79,18 @@
           ></textarea>
         </div>
 
+        <div class="form-group">
+          <label for="dataType">Kiểu bài tập (kiểu dữ liệu đầu ra):</label>
+          <select class="form-control" id="dataType" name="dataType" required>
+            <option value="">Chọn kiểu dữ liệu</option>
+            <option value="number">Number</option>
+            <option value="string">String</option>
+            <option value="boolean">Boolean</option>
+            <option value="array">Array</option>
+            <option value="object">Object</option>
+          </select>
+        </div>
+
         <button type="submit" class="btn btn-primary">Thêm bài tập</button>
         <a href="/practice" class="btn btn-secondary">Hủy</a>
       </form>
