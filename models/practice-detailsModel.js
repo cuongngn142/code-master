@@ -3,11 +3,8 @@ const { query } = require('../config/database');
 class PracticeDetailsModel {
     async getPracticeDetails(id) {
         try {
-            const practice = await query(
-                'SELECT bts.* , bt.*, cd.TenChuDe FROM BoTest bts JOIN BaiTap bt ON bts.MaBaiTap = bt.MaBaiTap JOIN ChuDe cd ON bt.MaChuDe = cd.MaChuDe WHERE bt.MaBaiTap = ?',
-                [id]
-            );
-            return practice[0];
+            const result = await query('SELECT * FROM baitap WHERE mabaitap = $1', [id]);
+            return result[0];
         } catch (error) {
             throw error;
         }
@@ -25,7 +22,7 @@ class PracticeDetailsModel {
 
             // Kiểm tra bài tập có tồn tại không
             const practice = await query(
-                'SELECT MaBaiTap FROM BaiTap WHERE MaBaiTap = ?',
+                'SELECT mabaitap FROM baitap WHERE mabaitap = $1',
                 [id]
             );
 
@@ -40,32 +37,32 @@ class PracticeDetailsModel {
                 // Xóa tất cả các bản ghi liên quan theo thứ tự
                 // 1. Xóa kết quả bài nộp
                 const deleteKetQua = await query(
-                    'DELETE FROM KetQuaBaiNop WHERE MaBaiTap = ?',
+                    'DELETE FROM ketquabainop WHERE mabaitap = $1',
                     [id]
                 );
-                console.log('Đã xóa kết quả bài nộp:', deleteKetQua.affectedRows, 'bản ghi');
+                console.log('Đã xóa kết quả bài nộp:', deleteKetQua.rowCount, 'bản ghi');
 
                 // 2. Xóa bộ test
                 const deleteBoTest = await query(
-                    'DELETE FROM BoTest WHERE MaBaiTap = ?',
+                    'DELETE FROM botest WHERE mabaitap = $1',
                     [id]
                 );
-                console.log('Đã xóa bộ test:', deleteBoTest.affectedRows, 'bản ghi');
+                console.log('Đã xóa bộ test:', deleteBoTest.rowCount, 'bản ghi');
 
-                // 3. Xóa từ bảng ChiTietDanhSachBaiTap nếu có
+                // 3. Xóa từ bảng chitietdanhsachbaitap nếu có
                 const deleteChiTiet = await query(
-                    'DELETE FROM ChiTietDanhSachBaiTap WHERE MaBaiTap = ?',
+                    'DELETE FROM chitietdanhsachbaitap WHERE mabaitap = $1',
                     [id]
                 );
-                console.log('Đã xóa chi tiết danh sách:', deleteChiTiet.affectedRows, 'bản ghi');
+                console.log('Đã xóa chi tiết danh sách:', deleteChiTiet.rowCount, 'bản ghi');
 
                 // 4. Cuối cùng mới xóa bài tập
                 const result = await query(
-                    'DELETE FROM BaiTap WHERE MaBaiTap = ?',
+                    'DELETE FROM baitap WHERE mabaitap = $1',
                     [id]
                 );
 
-                if (!result || result.affectedRows === 0) {
+                if (!result || result.rowCount === 0) {
                     throw new Error('Không thể xóa bài tập');
                 }
 
@@ -107,28 +104,28 @@ class PracticeDetailsModel {
             }
 
             // Kiểm tra từng trường dữ liệu riêng biệt
-            if (!data.TieuDe || data.TieuDe.trim() === '') {
+            if (!data.tieude || data.tieude.trim() === '') {
                 return {
                     success: false,
                     message: 'Tiêu đề không được để trống'
                 };
             }
 
-            if (!data.MoTa || data.MoTa.trim() === '') {
+            if (!data.mota || data.mota.trim() === '') {
                 return {
                     success: false,
                     message: 'Mô tả không được để trống'
                 };
             }
 
-            if (!data.MucDoKho || !['Dễ', 'Trung Bình', 'Khó'].includes(data.MucDoKho)) {
+            if (!data.mucdokho || !['Dễ', 'Trung Bình', 'Khó'].includes(data.mucdokho)) {
                 return {
                     success: false,
                     message: 'Mức độ khó không hợp lệ'
                 };
             }
 
-            if (!data.MaChuDe) {
+            if (!data.machude) {
                 return {
                     success: false,
                     message: 'Mã chủ đề không được để trống'
@@ -138,7 +135,7 @@ class PracticeDetailsModel {
 
             // Kiểm tra bài tập có tồn tại không
             const practice = await query(
-                'SELECT * FROM BaiTap WHERE MaBaiTap = ?',
+                'SELECT * FROM baitap WHERE mabaitap = $1',
                 [id]
             );
 
@@ -151,8 +148,8 @@ class PracticeDetailsModel {
 
             // Kiểm tra chủ đề có tồn tại không
             const topic = await query(
-                'SELECT MaChuDe FROM ChuDe WHERE MaChuDe = ?',
-                [data.MaChuDe]
+                'SELECT machude FROM chude WHERE machude = $1',
+                [data.machude]
             );
 
             if (topic.length === 0) {
@@ -164,24 +161,24 @@ class PracticeDetailsModel {
 
             // Cập nhật thông tin bài tập
             await query(
-                'UPDATE BaiTap SET TieuDe = ?, MoTa = ?, MucDoKho = ?, MaChuDe = ? WHERE MaBaiTap = ?',
-                [data.TieuDe, data.MoTa, data.MucDoKho, data.MaChuDe, id]
+                'UPDATE baitap SET tieude = $1, mota = $2, mucdokho = $3, machude = $4 WHERE mabaitap = $5',
+                [data.tieude, data.mota, data.mucdokho, data.machude, id]
             );
 
             // Cập nhật hoặc tạo mới bộ test
-            const existingTest = await query('SELECT * FROM BoTest WHERE MaBaiTap = ?', [id]);
+            const existingTest = await query('SELECT * FROM botest WHERE mabaitap = $1', [id]);
             
             if (existingTest.length > 0) {
                 // Cập nhật bộ test hiện có
                 await query(
-                    'UPDATE BoTest SET DuLieuDauVao = ?, DauRaMongDoi = ?,  KieuDuLieu = ? WHERE MaBaiTap = ?',
-                    [data.DuLieuDauVao, data.DauRaMongDoi, data.KieuDuLieu, id]
+                    'UPDATE botest SET dulieudauvao = $1, dauramongdoi = $2,  kieudulieu = $3 WHERE mabaitap = $4',
+                    [data.dulieudauvao, data.dauramongdoi, data.kieudulieu, id]
                 );
             } else {
                 // Tạo mới bộ test
                 await query(
-                    'INSERT INTO BoTest (MaBaiTap, DuLieuDauVao, DauRaMongDoi, KieuDuLieu) VALUES (?, ?, ?, ?)',
-                    [id, data.DuLieuDauVao, data.DauRaMongDoi, data.KieuDuLieu]
+                    'INSERT INTO botest (mabaitap, dulieudauvao, dauramongdoi, kieudulieu) VALUES ($1, $2, $3, $4)',
+                    [id, data.dulieudauvao, data.dauramongdoi, data.kieudulieu]
                 );
             }
 

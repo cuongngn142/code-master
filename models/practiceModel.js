@@ -4,10 +4,10 @@ class PracticeModel {
     async getAllPractices() {
         try {
             const practices = await query(`
-                SELECT BaiTap.*, ChuDe.TenChuDe 
-                FROM BaiTap 
-                LEFT JOIN ChuDe ON BaiTap.MaChuDe = ChuDe.MaChuDe
-                ORDER BY BaiTap.NgayTao DESC
+                SELECT baitap.*, chude.tenchude 
+                FROM baitap 
+                LEFT JOIN chude ON baitap.machude = chude.machude
+                ORDER BY baitap.ngaytao DESC
             `);
             return practices;
         } catch (error) {
@@ -17,7 +17,7 @@ class PracticeModel {
 
     async getAllTopics() {
         try {
-            const topics = await query('SELECT * FROM ChuDe');
+            const topics = await query('SELECT * FROM chude');
             return topics;
         } catch (error) {
             throw error;
@@ -26,7 +26,7 @@ class PracticeModel {
 
     async getPracticeById(id) {
         try {
-            const practice = await query('SELECT * FROM BaiTap WHERE MaBaiTap = ?', [id]);
+            const practice = await query('SELECT * FROM baitap WHERE mabaitap = $1', [id]);
             return practice;
         } catch (error) {
             throw error;
@@ -36,7 +36,7 @@ class PracticeModel {
     async searchPractices(searchTerm) {
         try {
             const practices = await query(
-                'SELECT * FROM BaiTap WHERE TieuDe LIKE ? OR MoTa LIKE ?',
+                'SELECT * FROM baitap WHERE tieude ILIKE $1 OR mota ILIKE $2',
                 [`%${searchTerm}%`, `%${searchTerm}%`]
             );
             return practices;
@@ -47,18 +47,17 @@ class PracticeModel {
 
     async filterPractices(difficulty, topic) {
         try {
-            let sql = 'SELECT * FROM BaiTap WHERE 1=1';
+            let sql = 'SELECT * FROM baitap WHERE 1=1';
             const params = [];
-            
+            let idx = 1;
             if (difficulty) {
-                sql += ' AND MucDoKho = ?';
+                sql += ` AND mucdokho = $${idx++}`;
                 params.push(difficulty);
             }
             if (topic) {
-                sql += ' AND MaChuDe = ?';
+                sql += ` AND machude = $${idx++}`;
                 params.push(topic);
             }
-            
             const practices = await query(sql, params);
             return practices;
         } catch (error) {

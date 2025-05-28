@@ -1,29 +1,26 @@
-const { sql, poolPromise } = require('../config/database');
+const { query } = require('../config/database');
+const bcrypt = require('bcryptjs');
 
 class UserModel {
-    register: async (hoTen, email, matKhau, vaiTro) => {
+    async register(hoten, email, matKhau, vaitro) {
         try {
-            const pool = await poolPromise;
-            const result = await pool.request()
-                .input('HoTen', sql.NVarChar(50), hoTen)
-                .input('Email', sql.NVarChar(50), email)
-                .input('MatKhau', sql.NVarChar(50), matKhau)
-                .input('VaiTro', sql.NVarChar(50), vaiTro)
-                .query('INSERT INTO NguoiDung (HoTen, Email, MatKhau, VaiTro) VALUES (@HoTen, @Email, @MatKhau, @VaiTro)');
-            return result;
+            await query(
+                'INSERT INTO nguoidung (hoten, email, matKhau, vaitro) VALUES ($1, $2, $3, $4)',
+                [hoten, email, matKhau, vaitro]
+            );
+            return true;
         } catch (error) {
             throw error;
         }
     }
 
-    async login(email, matKhau) {
+    async login(email) {
         try {
-            const pool = await poolPromise;
-            const result = await pool.request()
-                .input('Email', sql.NVarChar(50), email)
-                .input('MatKhau', sql.NVarChar(50), matKhau)
-                .query('SELECT * FROM NguoiDung WHERE Email = @Email AND MatKhau = @MatKhau');
-            return result.recordset[0];
+            const result = await query(
+                'SELECT * FROM nguoidung WHERE email = $1',
+                [email]
+            );
+            return result[0];
         } catch (error) {
             throw error;
         }
